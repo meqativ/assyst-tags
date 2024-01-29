@@ -45,7 +45,6 @@ const mu = (name, url, m="") => m+`[\`${name}\`](${url})`+m;
         if (Number.isNaN(index)) return "💥 --index value must be a number";
         if (index < 0) return "💥 --index value must be a positive number";
     }
-    debugger;
     let post;
     try {
         post = (await r34(args.filter(arg => !arg.startsWith("--")), { index }))[0];
