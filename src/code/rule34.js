@@ -36,7 +36,9 @@ const mu = (name, url, m="") => m+`[\`${name}\`](${url})`+m;
         ["orig", "uses original file link as the shown media"],
         ["raw", "returns the raw JSON of the post"],
         ["index=num", "(0 ≤ num) which result to show"],
-        ["url", "return only the media url"]])}\``
+        ["url", "return only the media url"],
+        ["tagless", "hide the tags from the output completely"],
+        ["help","shows this help message"]])}\``
     }
     let rawIndex = flag("index="),
         index;
@@ -62,8 +64,8 @@ const mu = (name, url, m="") => m+`[\`${name}\`](${url})`+m;
     
     post.tags = post.tags.split(" ");
     let lines = [];
-    const start = `${mu(`#${post.id} Post`, `<${base()}?page=post&s=view&id=${post.id}>`)}ed by ${mu(post.owner, `<${base()}?page=account&s=profile&uname=${post.owner}>`)}\n`+
-    `${flag("tagless") && post.tags.length > 0 ? "" : `> ${post.tags.slice(0,maxTagAmount-1).join(", ")}${post.tags.length>maxTagAmount?` & ${post.tags.length-maxTagAmount} more…`:""}`}\n`;
+    const start = `${mu(`Post`, `<${base()}?page=post&s=view&id=${post.id}>`)} (\`${post.id}\`) by ${mu(post.owner, `<${base()}?page=account&s=profile&uname=${post.owner}>`)}\n`+
+    `${flag("tagless") && post.tags.length > 0 ? "" : `> ||${post.tags.slice(0,maxTagAmount-1).join(", ")}${post.tags.length>maxTagAmount?` & ${post.tags.length-maxTagAmount} more…`:""}`}||\n`;
     lines.push(`\`${post.score == 0 ? "◽" : (post.score < 0 ? "🟥" : "🟩")} ${post.score} score\``);
     if (post.source && post.source.startsWith("https://"))
     lines.push(
