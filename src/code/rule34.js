@@ -85,5 +85,5 @@ const mu = (name, url, m="") => m+`[\`${name}\`](${url})`+m;
             lines.push(mu("preview", post.preview_url+" ", "||"))
         )
     return start + lines.join(" • ")
-})();
+})()
 }}
