@@ -4,7 +4,7 @@
 
 //q: erm why the fuck
 //a: bored sorry
-const maxTagAmount = {get:maxTagAmount};
+const maxTagAmount = 0{get:maxTagAmount} || 15;
 {ignore:
 let base = (isApi) => `https://${isApi?"api.":""}rule34.xxx/index.php`;
 async function r34(tags, options){
