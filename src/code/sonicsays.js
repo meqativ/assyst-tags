@@ -19,8 +19,8 @@ const emojis = \{
         const prefix = stuff[1] || ""; //        used bot prefix [1] eg. "-"
         const commandName = stuff[2]; //       used command name [2] eg. "t" or "tag"
         const tagName = stuff[3]; //               used tag name [3] eg. "sonicsays" or "hiya" if fprefix is "-t hiya"
-        return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} [text…]\n`+
-        `\n\`\`\`ansi\n`+
+        return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} [text…]\`\`\`\n`+
+        `\`\`\`ansi\n`+
         `[36mExamples: [39m\n`+
         [
             ` ${fprefix}`,
@@ -31,7 +31,6 @@ const emojis = \{
             ` ${fprefix} hell yeah well done`
         ].join("\n")+
 `\`\`\``
-		return `${ctx.usesSONICSAYS[message.author.id] < 5 ? emojis.help : emojis.help2} \`${stuff[0]} [text...]\``;
 	}
 	try {
 		const [sonic, font] = await Promise.all([
