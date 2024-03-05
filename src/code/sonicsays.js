@@ -33,14 +33,16 @@ const emojis = \{
 `\`\`\``
 	}
 	try {
-		const [sonic, font] = await Promise.all([
-			fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/bg.png`)
-				.then((res) => res.arrayBuffer())
-				.then(ImageScript.decode),
-			fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/font.ttf`)
-				.then((res) => res.arrayBuffer())
-				.then((a) => new Uint8Array(a)),
-		]);
+	const sonic = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/bg.png`)
+                .then((res) => res.arrayBuffer())
+                .then(ImageScript.decode)
+                .catch(e=>{throw `Failed to load/download background image\n${e?.stack??e}`});
+                
+        const font = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/font.ttf`)
+                .then((res) => res.arrayBuffer())
+                .then((a) => new Uint8Array(a))
+                .catch(e=>{throw `Failed to load/download font\n${e?.stack??e}`});
+
 
 		const layout = new ImageScript.TextLayout({
 			maxHeight: 350,
@@ -60,3 +62,4 @@ const emojis = \{
 	}
 	
 	})()}}
+
