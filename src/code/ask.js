@@ -6,7 +6,7 @@ if (ctx.messages?.[message.author.id] !== undefined) {
     ctx.messages?.[message.author.id].push({
         by: "system", text: message.referenced_message.content.replace("󠄴󠄴󠄴","")
     }, {
-        by: "system", text: `\n<Information about the links in your message (if any)>: ${message?.referenced_message.embeds.length ? JSON.stringify(message.referenced_message.embeds, 0, 1) : "None"}`
+        by: "system", text: `Information about the links in your message (if any): ${message?.referenced_message.embeds.length ? JSON.stringify(message.referenced_message.embeds, 0, 1) : "None"}`
     })
 }
 })()
@@ -14,7 +14,7 @@ const messages = ctx.messages?.[message.author.id] ?? (ctx.messages[message.auth
 messages.push({
     by: "user", text: args.join(" ").trim() || "<didn't say anything>"
 }, {
-        by: "system", text: `\n<Information about the links in the user's message (if any)>: ${message.embeds.length ? JSON.stringify(message.embeds, 0, 1) : "None"}`
+        by: "system", text: `Information about the links in the user's message (if any): ${message.embeds.length ? JSON.stringify(message.embeds, 0, 1) : "None"}`
     })
 let tmp = [...messages];
 tmp[0] = {
