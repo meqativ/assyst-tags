@@ -12,7 +12,7 @@ if (ctx.messages?.[message.author.id] !== undefined) {
 })()
 const messages = ctx.messages?.[message.author.id] ?? (ctx.messages[message.author.id] = [{toJSON: () => "[prompt]"}])
 messages.push({
-    by: "user", text: `${args.join(" ").trim() || "<didn't say anything>"}\n<Information about the links (if any)>: ${}`
+    by: "user", text: args.join(" ").trim() || "<didn't say anything>"
 }, {
         by: "system", text: `\n<Information about the links in the user's message (if any)>: ${message.embeds.length ? JSON.stringify(message.embeds, 0, 1) : "None"}`
     })
