@@ -1,11 +1,13 @@
-
 {js:{ignore:
+ctx.check = undefined;
 ctx.messages ??= {};
 (()=>{
 if (ctx.messages?.[message.author.id] !== undefined) {
-    if (!message?.referenced_message?.content.startsWith("󠄴󠄴󠄴") || !Array.isArray(ctx.messages?.[message.author.id]) || ctx.messages?.[message.author.id].every((v,i)=>(i===0) ? true : JSON.stringify(Object.keys(v)) === `["by","text"]`)) return delete ctx.messages?.[message.author.id];
+    const check = [!message?.referenced_message?.content.startsWith("󠄴󠄴󠄴"), !Array.isArray(ctx.messages?.[message.author.id]), ctx.messages?.[message.author.id].every((v,i)=>(i===0) ? true : JSON.stringify(Object.keys(v)) === `["by","text"]`)]
+    ctx.check = check;
+    if (check[0] || check[1] || check[2]) return delete ctx.messages?.[message.author.id];
     ctx.messages?.[message.author.id].push({
-        by: "system", text: message.referenced_message.content+`\n<Information about the links (if any)>: ${message?.referenced_message?.embeds.length ? JSON.stringify(message.referenced_message.embeds,0,1) : "None"}`
+        by: "system", text: message.referenced_message.content.replace("󠄴󠄴󠄴","")+`\n<Information about the links (if any)>: ${message?.referenced_message?.embeds.length ? JSON.stringify(message.referenced_message.embeds,0,1) : "None"}`
     })
 }
 })()
@@ -22,3 +24,4 @@ fetch("https://ai.aesthetic.computer/api/ask", {
     body: JSON.stringify({ hint: "character", messages: tmp })
 }).then(r => `󠄴󠄴󠄴`+r.text())
 }}
+{js:ctx?.check??""}
