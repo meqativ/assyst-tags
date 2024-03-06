@@ -141,7 +141,7 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
     const tagsText = `${flag("no-tags") && forceNoTags !== true && post.tags.length > 0 ? "" : `> ${taggers.slice(0,maxTagAmount-1).join(", ")}${taggers.length>maxTagAmount?` & ${taggers.length-maxTagAmount} more…`:""}`}\n`;
     
     const start = `${mu(`Post`, `<${r34url(false, "index.php", {page:"post", s: "view", id: post.id})}>`)} (\`${post.id}\`) by ${mu(post.owner, `<${r34url(false, "index.php", {page:"account", s: "profile", uname: post.owner})}>`)}\n` + tagsText;
-    lines.push(`\`${post.score == 0 ? "◽" : (post.score < 0 ? "🟥" : "🟩")} ${post.score} score\``);
+    lines.push(`\`${post.score == 0 ? "↕" : (post.score < 0 ? "↓" : "↑")}${post.score} score\``);
     if (post.source && post.source.startsWith("https://"))
     lines.push(
         post.source.split(" ")
