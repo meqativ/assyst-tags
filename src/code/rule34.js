@@ -65,7 +65,7 @@ const err = (text) => `💥 \`\`${text}\`\``;
                 .join("\n")
         }
 return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […arguments…] […query…]\n`+
-        `Note: […query…] could be everything that doesn't start with "--" (arguments start with that)\`\`\`\n\`\`\`ansi\n`+
+        `Note: […query…] could anything that doesn't start with "--" (arguments start with that, they're split by space)\`\`\`\n\`\`\`ansi\n`+
         `[36mArguments:[39m\n${make([
         [              "help", "shows this help message"                                 ],
         [               "raw", "returns the raw JSON of the post"                        ],
@@ -106,20 +106,28 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
     try {
         post = (await r34list(tags, { index, onepost }))[0];
     } catch (error) {
-        const errorcblck = `\n\`\`\`js\n${error?.[1]?.stack??error?.[1]??error}\`\`\``
-        if(error[0] === 404) return err("Post Not Found");
-        if(error[0] === 416 && index) return err("--index=num too far, api limit");
-        if(error[0] === 416) return err(`Something went wrong`) + errorcblck;
+        const errorCodeblock = `\n\`\`\`js\n${error?.[1]?.stack??error?.[1]??error}\`\`\``
+        if (error[0] === 404) return err("Post Not Found");
+        if (error[0] === 416 && index) return err("--index=num too far, api limit");
+        if (error[0] === 416) return err(`Something went wrong`) + errorCodeblock;
         
-        return err(`An error ocurred while trying to get the post`) + errorcblck
+        return err(`An error ocurred while trying to get the post`) + errorCodeblock
     }
     if (post === undefined && index) return err("--index=num out of bounds");
     
-    if(flag("raw")) return JSON.stringify(post, 0, 2);
-    if(flag("url")) return `<${post.file_url.split(" ")[0]}>`;
+    if (flag("raw")) return JSON.stringify(post, 0, 2);
+    if (flag("url")) return `<${post.file_url.split(" ")[0]}>`;
     
+    
+    
+    const postPageURL = r34url(0, "index.php", { page:"post", s: "view", id: post.id });
+    const ownerPageURL = r34url(0, "index.php", { page:"account", s: "profile", uname: post.owner });
+    // title
+    let output = `${mu(`Post`, `<${postPageURL}>`)} (\`${post.id}\`) by ${mu(post.owner, `<${ownerPageURL}>`)}\n`;
+    
+    
+    // tags
     post.tags = post.tags.split(" ");
-    let lines = [];
     const showMatched = flag("show-matched-tags"),
      moreTags = flag("more-tags");
     const taggers = !showMatched ? post.tags : [];
@@ -129,7 +137,7 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
             if (regex.test(tagI)) {
                 if (!taggers.includes(`**${tagI}**`) || !taggers.includes(tagI)) {
                     if (!taggers.includes(tagI)) taggers.push(`**${tagI}**`)
-                    
+                    // I DONT KNOW WHAT'S GOING ON HERE I UNDERSTOOD IT A WEEK AGO
                     let temp;
                     if ((temp = taggers.indexOf(tagI), temp !== -1)) taggers[temp] = `**${tagI}**`;
                 } else continue;
@@ -138,23 +146,35 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
             }
         }
     }
-    const tagsText = `${flag("no-tags") && forceNoTags !== true && post.tags.length > 0 ? "" : `> ${taggers.slice(0,maxTagAmount-1).join(", ")}${taggers.length>maxTagAmount?` & ${taggers.length-maxTagAmount} more…`:""}`}\n`;
+    // push tags
+    output+= `${flag("no-tags") && forceNoTags !== true && post.tags.length > 0
+        ? ""
+        : `> ${taggers.slice(0,maxTagAmount-1).join(", ")}${
+                    taggers.length > maxTagAmount
+                        ? ` & ${taggers.length-maxTagAmount} more…`
+                        : ""
+                    }`
+        }\n`;
     
-    const start = `${mu(`Post`, `<${r34url(false, "index.php", {page:"post", s: "view", id: post.id})}>`)} (\`${post.id}\`) by ${mu(post.owner, `<${r34url(false, "index.php", {page:"account", s: "profile", uname: post.owner})}>`)}\n` + tagsText;
-    lines.push(`\`${post.score == 0 ? "⬜" : (post.score < 0 ? "🟥" : "🟩")} ${post.score} score\``);
-    if (post.source && post.source.startsWith("https://"))
-    lines.push(
+    
+    let pills = [];
+    
+    pills.push(`\`${post.score == 0 ? "⬜" : (post.score < 0 ? "🟥" : "🟩")} ${post.score} score\``);
+    
+    if (post.source && post.source.startsWith("https://")) pills.push(
         post.source.split(" ")
-            .map((url, i) => mu(0 !== i ? "#"+(i+1) : "source", `<${url}>`))
+            .map((url, i) => mu(0 !== i ? "#" + (i + 1) : "source", `<${url}>`))
             .join(" · "));
     
     flag("orig")
-        ? lines.push(mu("raw",post.file_url+" ", "||"))
+        ? pills.push(mu("raw", post.file_url + " ", "||"))
         : (
-            lines.push(mu("raw", `<${post.file_url}>`)),
-            lines.push(mu("preview", post.preview_url+" ", "||"))
+            pills.push(mu("raw", `<${post.file_url}>`)),
+            pills.push(mu("preview", post.preview_url + " ", "||"))
         )
-    return start + lines.join(" • ")
+    // push pills
+    output += pills.join(" • ")
+    return output
 })()
 }//} })("meow")
 
