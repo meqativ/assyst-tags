@@ -7,16 +7,16 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
     const getDefaultAvatarIndex = (user) => user.discriminator === "0" ? Math.abs((user.id << 22) % 6) : user.discriminator % 5;
 	const now = new Date();
     
-	const tweet = await fetch(`http://87.244.131.254:4222/assets/oulays/clowntweet.png`)
+	const tweet = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/assets/oulays/clowntweet.png`)
 		.then((res) => res.arrayBuffer())
 		.then(ImageScript.decode)
         .catch(e=>{throw `Failed to load/download background image\n${e?.stack??e}`});
         
-	const robotoBold = await fetch(`http://87.244.131.254:4222/assets/fonts/Roboto-Bold.ttf`)
+	const robotoBold = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/assets/fonts/Roboto/Roboto-Bold.ttf`)
         .then((res) => res.arrayBuffer())
         .then((a) => new Uint8Array(a))
         .catch(e=>{throw `Failed to load/download font "Roboto-Bold"\n${e?.stack??e}`});
-	const robotoLight = await fetch(`http://87.244.131.254:4222/assets/fonts/Roboto-Light.ttf`)
+	const robotoLight = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/assets/fonts/Roboto/Roboto-Light.ttf`)
         .then((res) => res.arrayBuffer())
         .then((a) => new Uint8Array(a))
         .catch(e=>{throw `Failed to load/download font "Roboto-Light"\n${e?.stack??e}`});
@@ -39,7 +39,7 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
 		0x777d84ee,
 		layout
 	);
-	
+
 	let clownAvatar = await fetch(`https://cdn.discordapp.com/avatars/${clownTarget.id}/${clownTarget.avatar}.png?size=128`)
 	    .then((x) => x.arrayBuffer())
 		.then(ImageScript.decode)
@@ -50,7 +50,7 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
 	    );
 	clownAvatar.cropCircle()
 	clownAvatar.contain(93, 93); // resizes the image to fit in 93x93
-		
+
 	tweet.composite(clownName, 130, 823, 0);
 	tweet.composite(clownInfo, 130 + clownName.width, 823, 0);
 	tweet.composite(clownAvatar, 20, 829);
