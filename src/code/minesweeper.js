@@ -1,7 +1,7 @@
 {js:
 let more = "";
 const ntu = (value) => Number.isNaN(value) ? undefined : value;
-const \{generateMinesweeper\} = {download: http://87.244.131.254:4200/code/modules/Minesweeper.js };
+const \{generateMinesweeper\} = {download: http://meqativ.github.io/assyst-tags/src/code/modules/Minesweeper.js };
 {ignore:(async ()=>{
 
 const help = `**Usage:** ${message?.content?.match?.(/^(.+)? ?(tag|t) ([^ ^\n]+)/)[0] || "-t <tagname>"} \`{difficulty 1-[2]-5}\` \`{columns 1-[9]-inf}\` \`{rows 1-[9]-inf}\``
