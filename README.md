@@ -10,12 +10,20 @@ you can add any of them as tags on your server by doing this command
 some of them might also have settings, you check for those by going through the code for any `{get:name}` subtags.
 then just append a `{set:name|value}` RIGHT BEFORE THE `{eval:`, or you're giving unexpected behavior to other people.<br/>
 bad example: 
-```
--t create <TAG_NAME> {set:angle|  50 }
+```diff
+- -t create <TAG_NAME> {set:angle|  50 }
 
-{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
+- {eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
 ```
-good example: 
+```diff
+- -t create <TAG_NAME> {set:pivot | 12}
+-       {set:angle|  50 }
+- {eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
 ```
--t create <TAG_NAME> {set:angle|50}{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
+good examples: 
+```diff
++ -t create <TAG_NAME> {set:angle|50}{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
+```
+```diff
++ -t create <TAG_NAME> {set:pivot|12}{set:angle|50}{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
 ```
