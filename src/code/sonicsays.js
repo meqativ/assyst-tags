@@ -33,7 +33,7 @@ const emojis = \{
 `\`\`\``
 	}
 	try {
-	const sonic = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/bg.png`)
+	    const sonic = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/bg.png`)
                 .then((res) => res.arrayBuffer())
                 .then(ImageScript.decode)
                 .catch(e=>{throw `Failed to load/download background image\n${e?.stack??e}`});
