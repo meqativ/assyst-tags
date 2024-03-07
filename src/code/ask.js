@@ -1,7 +1,7 @@
 {js:{ignore:
 ctx.messages ??= {};
 (()=>{
-if (message?.referenced_message?.content?.length > 0) args = args.join(" ").replace(message.referenced_message.content, "");
+if (message?.referenced_message?.content?.length > 0) args = args.join(" ").replace(message.referenced_message.content, "").split(" ");
 
 if (ctx.messages?.[message.author.id] !== undefined) {
     if (!message?.referenced_message?.content.startsWith("󠄴󠄴󠄴") || !Array.isArray(ctx.messages?.[message.author.id]) || !ctx.messages?.[message.author.id].every((v,i)=>(i===0) ? true : JSON.stringify(Object.keys(v)) === `["by","text"]`)) return delete ctx.messages?.[message.author.id];
