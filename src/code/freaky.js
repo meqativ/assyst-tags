@@ -43,8 +43,7 @@ const flag = (name) => args.find(arg => arg.startsWith("--" + name));
     
     if (flag("help") || flag("freaky-asf") || !text) {
         // more info on these in sonicsays.js
-        let [ fprefix, prefix, commandName, tagName ] = message.content.match(/^([^ ]+)? ?(tag|t) ([^ ^\n]+)/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
-        prefix ||= "";
+        let [ tagPrefix, prefix, commandName, tagName ] = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
         
         function make(args) {
             const maxWidthNames = args.flatMap(arg => arg[0])
@@ -63,13 +62,13 @@ const flag = (name) => args.find(arg => arg.startsWith("--" + name));
                                 ])}\n\n`+
                                 `[36m𝕰𝖝𝖆𝖒𝖕𝖑𝖊𝖘: [39m\n`+
                                 [
-                                    ` ${freaky(fprefix)} 𝔥𝔦 𝔱𝔥𝔦𝔰 𝔦𝔰 𝔰𝔬𝔪𝔢 𝔢𝔵𝔞𝔪𝔭𝔩𝔢 𝔦𝔡𝔨`,  
-                                    ` ${freaky(fprefix)} 𝔞𝔫𝔬𝔱𝔥𝔢𝔯 𝔢𝔵𝔞𝔪𝔭𝔩𝔢 𝔟𝔲𝔱 𝔱𝔥𝔦𝔰 𝔴𝔦𝔩𝔩 𝔟𝔢 𝔟𝔬𝔩𝔡 --𝔟𝔬𝔩𝔡 `,  
-                                    ` ${freaky(fprefix)} --𝔟𝔬𝔩𝔡 𝔢𝔵𝔭𝔩𝔬𝔰𝔦𝔬𝔫`,  
-                                    ` ${freaky(fprefix)} 𝔰𝔬𝔪𝔢 𝔪𝔬𝔯𝔢 --𝔟𝔬𝔩𝔡 𝔭𝔬𝔦𝔫𝔱𝔩𝔢𝔰𝔰 𝔱𝔢𝔵𝔱`,  
-                                    ` ${freaky(fprefix)} 𝔶𝔢𝔰𝔱𝔢𝔯𝔡𝔞𝔶 𝔦 𝔞𝔰𝔰 𝔰𝔶𝔰𝔱𝔢𝔡 --𝔟𝔬𝔩𝔡 `,  
-                                    ` ${freaky(fprefix)} 𝔴𝔥𝔶`,  
-                                    ` ${freaky(fprefix)} 𝔥𝔢𝔩𝔩 𝔶𝔢𝔞𝔥 𝔴𝔢𝔩𝔩 𝔡𝔬𝔫𝔢`
+                                    ` ${freaky(tagPrefix)} 𝔥𝔦 𝔱𝔥𝔦𝔰 𝔦𝔰 𝔰𝔬𝔪𝔢 𝔢𝔵𝔞𝔪𝔭𝔩𝔢 𝔦𝔡𝔨`,  
+                                    ` ${freaky(tagPrefix)} 𝔞𝔫𝔬𝔱𝔥𝔢𝔯 𝔢𝔵𝔞𝔪𝔭𝔩𝔢 𝔟𝔲𝔱 𝔱𝔥𝔦𝔰 𝔴𝔦𝔩𝔩 𝔟𝔢 𝔟𝔬𝔩𝔡 --𝔟𝔬𝔩𝔡 `,  
+                                    ` ${freaky(tagPrefix)} --𝔟𝔬𝔩𝔡 𝔢𝔵𝔭𝔩𝔬𝔰𝔦𝔬𝔫`,  
+                                    ` ${freaky(tagPrefix)} 𝔰𝔬𝔪𝔢 𝔪𝔬𝔯𝔢 --𝔟𝔬𝔩𝔡 𝔭𝔬𝔦𝔫𝔱𝔩𝔢𝔰𝔰 𝔱𝔢𝔵𝔱`,  
+                                    ` ${freaky(tagPrefix)} 𝔶𝔢𝔰𝔱𝔢𝔯𝔡𝔞𝔶 𝔦 𝔞𝔰𝔰 𝔰𝔶𝔰𝔱𝔢𝔡 --𝔟𝔬𝔩𝔡 `,  
+                                    ` ${freaky(tagPrefix)} 𝔴𝔥𝔶`,  
+                                    ` ${freaky(tagPrefix)} 𝔥𝔢𝔩𝔩 𝔶𝔢𝔞𝔥 𝔴𝔢𝔩𝔩 𝔡𝔬𝔫𝔢`
                                 ].join("\n")+"```";
         } else {
              return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${freaky(tagName)} […arguments…] […query…]\n`+
@@ -81,13 +80,13 @@ const flag = (name) => args.find(arg => arg.startsWith("--" + name));
                                 ])}\n\n`+
                                 `[36mExamples: [39m\n`+
                                 [
-                                    ` ${fprefix} hi this is some example idk`,
-                                    ` ${fprefix} another example but this will be bold --bold`,
-                                    ` ${fprefix} --bold explosion`,
-                                    ` ${fprefix} some more --bold pointless text`,
-                                    ` ${fprefix} yesterday i ass systed --bold`,
-                                    ` ${fprefix} why`,
-                                    ` ${fprefix} hell yeah well done`
+                                    ` ${tagPrefix} hi this is some example idk`,
+                                    ` ${tagPrefix} another example but this will be bold --bold`,
+                                    ` ${tagPrefix} --bold explosion`,
+                                    ` ${tagPrefix} some more --bold pointless text`,
+                                    ` ${tagPrefix} yesterday i ass systed --bold`,
+                                    ` ${tagPrefix} why`,
+                                    ` ${tagPrefix} hell yeah well done`
                                 ].join("\n")+"```";
         }
         
