@@ -43,7 +43,7 @@ const flag = (name) => args.find(arg => arg.startsWith("--" + name));
     
     if (flag("help") || flag("freaky-asf") || !text) {
         // more info on these in sonicsays.js
-        let [ fprefix, prefix, commandName, tagName ] = message.content.match(/^(.+)? ?(tag|t) ([^ ^\n]+)/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
+        let [ fprefix, prefix, commandName, tagName ] = message.content.match(/^([^ ]+)? ?(tag|t) ([^ ^\n]+)/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
         prefix ||= "";
         
         function make(args) {
