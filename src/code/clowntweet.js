@@ -7,16 +7,16 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
     const getDefaultAvatarIndex = (user) => user.discriminator === "0" ? Math.abs((user.id << 22) % 6) : user.discriminator % 5;
 	const now = new Date();
     
-	const tweet = await fetch(`https://meqativ.github.io/assyst-tags/src/assets/oulays/clowntweet.png`)
+	const tweet = await fetch(`http://meqativ.github.io/assyst-tags/src/assets/oulays/clowntweet.png`)
 		.then((res) => res.arrayBuffer())
 		.then(ImageScript.decode)
         .catch(e=>{throw `Failed to load/download background image\n${e?.stack??e}`});
         
-	const robotoBold = await fetch(`https://meqativ.github.io/assyst-tags/src/assets/fonts/Roboto/Roboto-Bold.ttf`)
+	const robotoBold = await fetch(`http://meqativ.github.io/assyst-tags/src/assets/fonts/Roboto/Roboto-Bold.ttf`)
         .then((res) => res.arrayBuffer())
         .then((a) => new Uint8Array(a))
         .catch(e=>{throw `Failed to load/download font "Roboto-Bold"\n${e?.stack??e}`});
-	const robotoLight = await fetch(`https://meqativ.github.io/assyst-tags/src/assets/fonts/Roboto/Roboto-Light.ttf`)
+	const robotoLight = await fetch(`http://meqativ.github.io/assyst-tags/src/assets/fonts/Roboto/Roboto-Light.ttf`)
         .then((res) => res.arrayBuffer())
         .then((a) => new Uint8Array(a))
         .catch(e=>{throw `Failed to load/download font "Roboto-Light"\n${e?.stack??e}`});
@@ -32,10 +32,11 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
 		0xffffffee,
 		layout
 	);
+	const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 	let clownInfo = await ImageScript.Image.renderText(
 		robotoLight,
 		26,
-		` • ${now.getDay()} ${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][now.getMonth()]} ${now.getFullYear() % 100}`,
+		` • ${now.getDay()} ${months[now.getMonth()]} ${now.getFullYear() % 100}`,
 		0x777d84ee,
 		layout
 	);
@@ -44,7 +45,7 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
 	    .then((x) => x.arrayBuffer())
 		.then(ImageScript.decode)
 		.catch((e) => 
-		    fetch(`https://cdn.discordapp.com/embed/avatars/${getDefaultAvatarIndex(clownTarget)}.png`)
+		    fetch(`http://cdn.discordapp.com/embed/avatars/${getDefaultAvatarIndex(clownTarget)}.png`)
 	            .then((r) => r.arrayBuffer())
 	            .then(ImageScript.decode)
 	    );

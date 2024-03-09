@@ -14,31 +14,30 @@ const emojis = \{
 		ctx.usesSONICSAYS ??= {};
 		if (!ctx.usesSONICSAYS[message.author.id]) ctx.usesSONICSAYS[message.author.id] = 0;
 		ctx.usesSONICSAYS[message.author.id] += 1;
-        let stuff = message.content.match(/^(.+)? ?(tag|t) ([^ ^\n]+)/);
-        const fprefix = stuff[0]; // full prefix for the tag run [0] eg. "-t sonicsays"
-        const prefix = stuff[1] || ""; //        used bot prefix [1] eg. "-"
-        const commandName = stuff[2]; //       used command name [2] eg. "t" or "tag"
-        const tagName = stuff[3]; //               used tag name [3] eg. "sonicsays" or "hiya" if fprefix is "-t hiya"
-        return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} [text…]\`\`\`\n`+
-        `\`\`\`ansi\n`+
-        `[36mExamples: [39m\n`+
-        [
-            ` ${fprefix}`,
-            ` ${fprefix} explosion`,
-            ` ${fprefix} some more pointless text`,
-            ` ${fprefix} yesterday i ass systed`,
-            ` ${fprefix} why`,
-            ` ${fprefix} hell yeah well done`
-        ].join("\n")+
-`\`\`\``
+        let stuff = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
+        const tagPrefix = stuff[0]; // full prefix for the tag run [0] eg. "-t sonicsays"
+        const prefix = stuff[1]; //                used bot prefix [1] eg. "-"
+        const commandName = stuff[2]; //         used command name [2] eg. "t" or "tag"
+        const tagName = stuff[3]; //                 used tag name [3] eg. "sonicsays" or "hiya" if tagPrefix is "-t hiya"
+        
+        return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} [text…]\n\n`+
+                           `[36mExamples: [39m\n`+
+                            [
+                                ` ${tagPrefix}`,
+                                ` ${tagPrefix} explosion`,
+                                ` ${tagPrefix} some more pointless text`,
+                                ` ${tagPrefix} yesterday i ass systed`,
+                                ` ${tagPrefix} why`,
+                                ` ${tagPrefix} hell yeah well done`
+                            ].join("\n")+"```"
 	}
 	try {
-	    const sonic = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/bg.png`)
+	    const sonic = await fetch(`http://meqativ.github.io/assyst-tags/src/assets/sonicsays/bg.png`)
                 .then((res) => res.arrayBuffer())
                 .then(ImageScript.decode)
                 .catch(e=>{throw `Failed to load/download background image\n${e?.stack??e}`});
                 
-        const font = await fetch(`https://raw.githubusercontent.com/meqativ/assyst-tags/main/src/assets/sonicsays/font.ttf`)
+        const font = await fetch(`http://meqativ.github.io/assyst-tags/src/assets/sonicsays/font.ttf`)
                 .then((res) => res.arrayBuffer())
                 .then((a) => new Uint8Array(a))
                 .catch(e=>{throw `Failed to load/download font\n${e?.stack??e}`});

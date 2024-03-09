@@ -3,7 +3,7 @@
 // let message = \{content: `t rule34 $\{args.join(" ")\}`\};
 //^ remove \ ^^     - -            ^      - -     ^ ^
 let maxTagAmount = +"{get:maxTagAmount}";
-let spoiler = "{get:spoiler}" === "true" ? true : false;
+let spoiler = "{get:spoiler}" === "true" ? true : false; // not implemented
 let forceNoTags = "{get:forceNoTags}" === "true" ? true : false;//{ignore:
 if (Number.isNaN(maxTagAmount)) maxTagAmount = 15;
 let temp;
@@ -52,11 +52,11 @@ const err = (text) => `💥 \`\`${text}\`\``;
 //❓ PUT RETURN HERE IF IN BROWSER CONTEXT
 (async () => {
     if (flag("help")) {
-        let stuff = message.content.match(/^(.+)? ?(tag|t) ([^ ^\n]+)/);
-        const fprefix = stuff[0]; // full prefix for the tag run [0] eg. "-t rule34"
-        const prefix = stuff[1] || ""; //        used bot prefix [1] eg. "-"
+        let stuff = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
+        const tagPrefix = stuff[0]; // full prefix for the tag run [0] eg. "-t rule34"
+        const prefix = stuff[1]; //              used bot prefix [1] eg. "-"
         const commandName = stuff[2]; //       used command name [2] eg. "t" or "tag"
-        const tagName = stuff[3]; //               used tag name [3] eg. "rule34" or "hiya" if fprefix is "-t hiya"
+        const tagName = stuff[3]; //               used tag name [3] eg. "rule34" or "hiya" if tagPrefix is "-t hiya"
         function make(args) {
             const maxWidthNames = args.flatMap(arg => arg[0])
                 .reduce((r, name) => name.length > r ? name.length : r, 0)
@@ -65,7 +65,7 @@ const err = (text) => `💥 \`\`${text}\`\``;
                 .join("\n")
         }
 return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […arguments…] […query…]\n`+
-        `Note: […query…] could anything that doesn't start with "--" (arguments start with that, they're split by space)\`\`\`\n\`\`\`ansi\n`+
+        `[30mNote: […query…] could be anything that doesn't start with "--" (arguments start with that, they're split by space)[39m\n\n`+
         `[36mArguments:[39m\n${make([
         [              "help", "shows this help message"                                 ],
         [               "raw", "returns the raw JSON of the post"                        ],
@@ -78,12 +78,12 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
         [         "more-tags", "show all tags, not just the one's that match the search" ]])}\n\n`+
         `[36mExamples: [39m\n`+
         [
-            ` ${fprefix} male/male`,
-            ` ${fprefix} --raw`,
-            ` ${fprefix} male/male --no-tags --index=6`,
-            ` ${fprefix} male/male --orig ejaculating`,
-            ` ${fprefix} --id=7582834`,
-            ` ${fprefix} --id=7582834 --raw`
+            ` ${tagPrefix} male/male`,
+            ` ${tagPrefix} --raw`,
+            ` ${tagPrefix} male/male --no-tags --index=6`,
+            ` ${tagPrefix} male/male --orig ejaculating`,
+            ` ${tagPrefix} --id=7582834`,
+            ` ${tagPrefix} --id=7582834 --raw`
         ].join("\n")+
 `\`\`\``
     }
@@ -125,7 +125,7 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
     // title
     let output = `${mu(`Post`, `<${postPageURL}>`)} (\`${post.id}\`) by ${mu(post.owner, `<${ownerPageURL}>`)}\n`;
     
-    
+    if (!forceNoTags) {
     // tags
     post.tags = post.tags.split(" ");
     const showMatched = flag("show-matched-tags"),
@@ -147,7 +147,7 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
         }
     }
     // push tags
-    output+= `${flag("no-tags") && forceNoTags !== true && post.tags.length > 0
+    output+= `${flag("no-tags") && post.tags.length > 0
         ? ""
         : `> ${taggers.slice(0,maxTagAmount-1).join(", ")}${
                     taggers.length > maxTagAmount
@@ -155,8 +155,7 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
                         : ""
                     }`
         }\n`;
-    
-    
+    }
     let pills = [];
     
     pills.push(`\`${post.score == 0 ? "⬜" : (post.score < 0 ? "🟥" : "🟩")} ${post.score} score\``);
