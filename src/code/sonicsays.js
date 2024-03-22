@@ -1,10 +1,9 @@
 {js:
 const emojis = \{
-        bad_image: "<:bad_image:1105128972364283954>",
-        help: "<:help:1099298038125695068>",
-        help2: "<a:help:1099938781504745483>",
-        \};
-    args = `{tag:args|{args}}`.split(" ");
+    bad_image: "<:bad_image:1105128972364283954>",
+    help: "<:help:1099298038125695068>",
+    help2: "<a:help:1099938781504745483>",
+\};
 {ignore:(async () => {
     let text = args.join(" ");
 	if (message?.referenced_message && message.referenced_message.content) text = message.referenced_message.content; 
