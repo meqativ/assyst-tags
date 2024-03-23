@@ -1,7 +1,6 @@
 {js:// await ((IN) => \{
 // let args = IN.split(" ");
 // let message = \{content: `t rule34 $\{args.join(" ")\}`\};
-//^ remove \ ^^     - -            ^      - -     ^ ^
 let maxTagAmount = +"{get:maxTagAmount}";
 let spoiler = "{get:spoiler}" === "true" ? true : false; // not implemented
 let forceNoTags = "{get:forceNoTags}" === "true" ? true : false;//{ignore:
@@ -49,7 +48,6 @@ const getarg = (name) => {
 const mu = (name, url, m="") => m+`[\`${name}\`](${url})`+m;
 const err = (text) => `💥 \`\`${text}\`\``;
 
-//❓ PUT RETURN HERE IF IN BROWSER CONTEXT
 (async () => {
     if (flag("help")) {
         let stuff = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
