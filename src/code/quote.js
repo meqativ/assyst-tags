@@ -1,4 +1,4 @@
-{js:
+{js: // original by @nixco33 on discord (https://discord.com/users/663402246456868894)
 const getBuff = (path, yop) => fetch(yop ? "http://meqativ.github.io/assyst-tags/src/" + path : path).then(res=>res.arrayBuffer());
 const avatarUrl = "{avatar:{js:(ctx.target=(message?.referenced_message \|\| message),ctx.target)?.author?.id}}";
 {ignore:(async()=>{
