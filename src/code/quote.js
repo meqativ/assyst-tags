@@ -1,5 +1,5 @@
 {js:
-const getBuff = (path, yop) => fetch(yop ? "http://87.244.131.254:4200/" + path : path).then(res=>res.arrayBuffer());
+const getBuff = (path, yop) => fetch(yop ? "http://meqativ.github.io/assyst-tags/src/" + path : path).then(res=>res.arrayBuffer());
 const avatarUrl = "{avatar:{js:(ctx.target=(message?.referenced_message \|\| message),ctx.target)?.author?.id}}";
 {ignore:(async()=>{
     args = args.join(" ").split(" ")
