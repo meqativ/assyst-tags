@@ -25,7 +25,7 @@ const avatarUrl = "{avatar:{js:(ctx.target=(message?.referenced_message \|\| mes
         .catch(e=>{throw `Failed to load/download overlay image\n${e?.stack??e}`});
     front.resize(1280, 720);
 
-    const avatar = await getBuff(avatarUrl+"?size=512")
+    const avatar = await getBuff(avatarUrl+"?size=640")
 	    .then(ImageScript.decode)
 	    .catch((e) => 
 	        getBuff(`http://cdn.discordapp.com/embed/avatars/${getDefaultAvatarIndex(target.author) || 0}.png`)
