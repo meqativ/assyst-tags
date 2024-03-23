@@ -41,7 +41,7 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
 		layout
 	);
 
-	let clownAvatar = await fetch(`https://cdn.discordapp.com/avatars/${clownTarget.id}/${clownTarget.avatar}.png?size=128`)
+	let clownAvatar = await fetch(avatar + "?size=96")
 	    .then((x) => x.arrayBuffer())
 		.then(ImageScript.decode)
 		.catch((e) => 
@@ -49,8 +49,8 @@ const avatar = "{avatar:{js:(ctx.target=(message?.referenced_message?.author \|\
 	            .then((r) => r.arrayBuffer())
 	            .then(ImageScript.decode)
 	    );
-	clownAvatar.cropCircle()
 	clownAvatar.contain(93, 93); // resizes the image to fit in 93x93
+	clownAvatar.cropCircle()
 
 	tweet.composite(clownName, 130, 823, 0);
 	tweet.composite(clownInfo, 130 + clownName.width, 823, 0);
