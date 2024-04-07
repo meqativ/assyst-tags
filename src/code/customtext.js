@@ -91,7 +91,7 @@ const text = args.filter(arg => !arg.startsWith("--")).join(" ");
 
 // more info on these in sonicsays.js
 let [ tagPrefix, prefix, commandName, tagName ] = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
-if (flag("help")) {
+if (flag("help") || (args.length === 1 && args[0] === "")) {
     function make(args) {
         const maxWidthNames = args.flatMap(arg => arg[0])
             .reduce((r, name) => name.length > r ? name.length : r, 0)
