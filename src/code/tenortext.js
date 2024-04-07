@@ -17,6 +17,7 @@ let imageUrl = "{lastattachment}";
         horizontalAlign: "middle"
     });
     
+    // properly splits | , just like in -meme :3
     let [topText, ...bottomText] = args.filter(arg => !arg.startsWith("--")).join(" ").split(/(?<!\\)\|/);
     bottomText = bottomText.map(a => a.trim()).join(" ").trim();
     topText = topText.trim();
