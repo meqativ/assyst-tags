@@ -1,4 +1,4 @@
-{js:{ignore:(()=>{
+{js:{ignore:(async ()=>{
 ctx.messages ??= {};
 (()=>{
 if (message?.referenced_message?.content?.length > 0) args = args.join(" ").replace(message.referenced_message.content, "").split(" ");
