@@ -26,6 +26,6 @@ const out = await fetch("https://ai.aesthetic.computer/api/ask", {
     method: "POST",
     body: JSON.stringify({ hint: "character", messages: tmp })
 }).then(r => `󠄴󠄴󠄴`+r.text()) 
-    if (out === "Access Denied") return "The Ai service this tag was using blocked assyst :+1:, maybe it will return to working state, try later.\n(if i find a working service i'll swap to that, you can `-t delete ask` if you want to put a different tag in place)"
+    if (out === "Access Denied.") return "The Ai service this tag was using blocked assyst :+1:, maybe it will return to working state, try later.\n(if i find a working service i'll swap to that, you can `-t delete ask` if you want to put a different tag in place)"
     return out;
 })()}}
