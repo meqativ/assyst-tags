@@ -1,6 +1,6 @@
 {js:
 const mediaUrlProvided = "{get:mediaUrl}";
-const getBuff = (path, yop) => fetch(yop ? "{tag:%mdbg}/src/" + path : path).then(res=>res.arrayBuffer());
+const getBuff = (path, yop) => fetch(yop ? "http://meqativ.github.io/assyst-tags/src/" + path : path).then(res=>res.arrayBuffer());
 {ignore:(async () => {
 let mediaUrl = mediaUrlProvided;
 if (!mediaUrl.startsWith("https://")) mediaUrl = "";
