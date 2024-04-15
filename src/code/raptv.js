@@ -14,6 +14,7 @@ const getarg = (name) => {
 }
 args = args.join(" ").split(" ");
 const text = args.filter(arg => !arg.startsWith("--")).join(" ");
+if (!text) return "Please provide some text"
 let [ font, line, shadow, media ] = await Promise.all([
 	getBuff(`assets/fonts/Gobold-Bold.ttf`, 1)
         .then(buff => new Uint8Array(buff))
