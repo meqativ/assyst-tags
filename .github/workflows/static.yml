@@ -35,7 +35,7 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Codepasta
         run: |
-          echo "meow" > ./src/tes.txt
+          chmod +x ./.github/workflows/static.sh && ./.github/workflows/static.sh 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
