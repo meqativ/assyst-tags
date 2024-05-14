@@ -7,6 +7,7 @@ you can add any of them as tags on your server by doing this command
 ```
 (replace `<TAG_NAME>` and `<FILE_NAME>` please)
 
+
 some of them might also have settings, you check for those by going through the code for any `{get:name}` subtags.
 then just append a `{set:name|value}` RIGHT BEFORE THE `{eval:` (or it's gonna bug out).<br/>
 bad: 
