@@ -79,9 +79,7 @@ const faces = {
         }
     },
     flipped: {
-        meta: ["reverse"],
-        
-        
+        meta: ["reverse"], 
         normal: {
             Z: "Z", Y: "⅄",
             X: "X", U: "Ո", V: "Ʌ", W: "Ϻ",
@@ -99,7 +97,76 @@ const faces = {
             h: "ɥ", g: "ƃ", f: "ⅎ", e: "ǝ",
             d: "p", c: "ɔ", b: "q", a: "ɐ",  
         },
-        
+    },
+    fullwidth: {
+        meta: [],
+        normal: {
+            a: "ａ", b: "ｂ", c: "ｃ", d: "ｄ",
+            e: "ｅ", f: "ｆ", g: "ｇ", h: "ｈ",
+            i: "ｉ", j: "ｊ", k: "ｋ", l: "ｌ",
+            m: "ｍ", n: "ｎ", o: "ｏ", p: "ｐ",
+            q: "ｑ", r: "ｒ", s: "ｓ", t: "ｔ",
+            u: "ｕ", v: "ｖ", w: "ｗ", x: "ｘ",
+            y: "ｙ", z: "ｚ",
+            
+            A: "Ａ", B: "Ｂ", C: "Ｃ", D: "Ｄ",
+            E: "Ｅ", F: "Ｆ", G: "Ｇ", H: "Ｈ",
+            I: "Ｉ", J: "Ｊ", K: "Ｋ", L: "Ｌ",
+            M: "Ｍ", N: "Ｎ", O: "Ｏ", P: "Ｐ",
+            Q: "Ｑ", R: "Ｒ", S: "Ｓ", T: "Ｔ",
+            U: "Ｕ", V: "Ｖ", W: "Ｗ", X: "Ｘ",
+            Y: "Ｙ", Z: "Ｚ",
+
+						"!": "！", 
+						"\"": "＂",
+						"#": "＃",
+						"$": "＄",
+						"%": "％",
+						"&": "＆",
+						"'": "＇",
+					  "(": "（",
+					  ")": "）",
+					  "*": "＊",
+					  "+": "＋",
+						",": "，",
+					  "-": "－",
+					  ".": "．",
+				    "/": "／",
+					  "0": "０",
+					  "1": "１",
+					  "2": "２",
+					  "3": "３",
+					  "4": "４",
+					  "5": "５",
+					  "6": "６",
+					  "7": "７",
+					  "8": "８",
+					  "9": "９",
+					  ":": "：",
+					  ";": "；",
+					  "<": "＜",
+					  "=": "＝",
+						">": "＞",
+					  "?": "？",
+					  "@": "＠",
+					  "[": "［",
+					  "\\": "＼",
+					  "]": "］",
+					  "^": "＾",
+					  "_": "＿",
+						"`": "｀",
+					  "{": "｛",
+					  "|": "｜",
+					  "}": "｝",
+					  "~": "～",
+					  "¢": "￠",
+					  "£": "￡",
+					  "¬": "￢",
+					  "¯": "￣",
+					  "¦": "￤",
+					  "¥": "￥",
+					  "₩": "￦",
+        },
     },
 }
 
@@ -112,7 +179,9 @@ const getarg = (name) => {
 const convert = (text, face, bold, reverse) => {
     const Face = faces[face];
     if (Face?.meta?.includes?.("reverse")) text = [...text].reverse().join("")
-    if (reverse) {
+    if (Face?.meta?.includes?.("upper")) text = text.toUpperCase()
+	  if (Face?.meta?.includes?.("lower")) text = text.toLowerCase()
+	  if (reverse) {
         if (Face.normal) Face.normal = Object.fromEntries(Object.entries(Face.normal).map(e=>e.reverse()))
         if (Face.bold) Face.bold = Object.fromEntries(Object.entries(Face.bold).map(e=>e.reverse()))
     }
