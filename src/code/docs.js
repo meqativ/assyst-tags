@@ -23,8 +23,9 @@
             searchnames: names.map(n=>n.substring(1,n.length-1)).map(n=>(n.includes(":")) ? n.split(":")[0] : n)
         })
     };
+
     if (args.length === 1 && args[0] === "--list") 
-        return `Are you looking for a list of tags? Use \`${prefix}${commandName} list\` ${message.guild_id === "1099115731301449758" ? `or \`${prefix}${commandName} cooltags\`` : ""} instead!\n\n`+
+        return (tagName === "help" ? `Are you looking for a list of tags? Use \`${prefix}${commandName} list\` ${message.guild_id === "1099115731301449758" ? `or \`${prefix}${commandName} cooltags\`` : ""} instead!\n\n` : ``)+
             `**Showing all subtags for tag scripting**\n`+
             `\`\`\`\n${tags.flatMap(t=>t.searchnames[0]).join(", ")}\`\`\`\n`+
             `Use \`${prefix}${commandName} ${tagName} [subtag's name]\` for more info on a subtag.\n`+
