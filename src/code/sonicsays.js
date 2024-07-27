@@ -5,11 +5,12 @@ const emojis = \{
     help2: "<a:help:1099938781504745483>",
 \};
 {ignore:(async () => {
+    args = args.join(" ").split(" ");
     let text = args.join(" ");
 	if (message?.referenced_message && message.referenced_message.content) text = message.referenced_message.content; 
 	//^ use replied message as text
 	
-	if (args.length === 1 && args[0] === "") {
+	if (!text.trim() || args.length === 1 && args[0] === "") {
 		ctx.usesSONICSAYS ??= {};
 		if (!ctx.usesSONICSAYS[message.author.id]) ctx.usesSONICSAYS[message.author.id] = 0;
 		ctx.usesSONICSAYS[message.author.id] += 1;
