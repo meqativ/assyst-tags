@@ -1,30 +1,19 @@
-hewo this is my assyst tag repo..
-all of the tags are stored in the src/code folder
+<div align="center">
+    <img src="./src/assets/assyst.svg" width="128" height="128">
+</div>
 
-you can add any of them as tags on your server by doing this command
-```
--t create <TAG_NAME> {eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
-```
-(replace `<TAG_NAME>` and `<FILE_NAME>` please)
+# <div align="center"> meqativ's Assyst tags </div>
+<div align="center">
+      hewo this is my assyst tag repo..<br/>
+      all of the tags are stored in the <code>./src/code</code> folder<br/><br/><br/>
+</div>
 
-
-some of them might also have settings, you check for those by going through the code for any `{get:name}` subtags.
-then just append a `{set:name|value}` RIGHT BEFORE THE `{eval:` (or it's gonna bug out).<br/>
-bad: 
-```
--t create <TAG_NAME> {set:angle|  50 }
-
-{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
-```
-```
--t create <TAG_NAME> {set:pivot | 12}
-      {set:angle|  50 }
-{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
-```
-good: 
-```
--t create <TAG_NAME> {set:angle|50}{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
-```
-```
--t create <TAG_NAME> {set:pivot|12}{set:angle|50}{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<FILE_NAME>.js}}
-```
+# <div align="center"> Tag template </div>
+<div align="center"><pre><samp>{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<kbd>FILE NAME</kbd>.js }}
+</samp></pre></div>
+<div align="center"> Example with <code><a href="./src/code/sonicsays.js">sonicsays.js</a></code></div>
+<div align="center"><pre><samp>{eval:{download:https://meqativ.github.io/assyst-tags/src/code/<kbd>sonicsays</kbd>.js }}
+</samp></pre></div>
+<image width="100%" src="https://github.com/user-attachments/assets/024396f8-eab8-4bbb-b1d6-e2250cadf44f"></image>
+<div align="center">or</div>
+<image width="100%" src="https://github.com/user-attachments/assets/fcc3c391-f442-40e9-bdca-8f73f3569ed1"></image>
