@@ -25,7 +25,7 @@
     };
 
     if (args.length === 1 && args[0] === "--list") 
-        return (tagName === "help" ? `Are you looking for a list of tags? Use \`${prefix}${commandName} list\` ${message.guild_id === "1099115731301449758" ? `or \`${prefix}${commandName} cooltags\`` : ""} instead!\n\n` : ``)+
+        return (tagName === "help" ? `Are you looking for a list of tags?\nUse \`${prefix}${commandName} list\` ${message.guild_id === "1099115731301449758" ? `or \`${prefix}${commandName} cooltags\`` : ""} instead.\nOr a list of assyst commands? Use \`-help\` instead.\n\n` : ``)+
             `**Showing all subtags for tag scripting**\n`+
             `\`\`\`\n${tags.flatMap(t=>t.searchnames[0]).join(", ")}\`\`\`\n`+
             `Use \`${prefix}${commandName} ${tagName} [subtag's name]\` for more info on a subtag.\n`+
