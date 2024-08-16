@@ -3,7 +3,8 @@
 // let message = \{content: `t rule34 $\{args.join(" ")\}`\};
 let maxTagAmount = +"{get:maxTagAmount}";
 let spoiler = "{get:spoiler}" === "true" ? true : false; // not implemented
-let forceNoTags = "{get:forceNoTags}" === "true" ? true : false;//{ignore:
+let forceNoTags = "{get:forceNoTags}" === "true" ? true : false;
+{ignore:
 if (Number.isNaN(maxTagAmount)) maxTagAmount = 15;
 let temp;
 const fromQueryParams = (queryParams) => Object.fromEntries(queryParams.split('&').map((i)=>{return i = i.split('='), i[1] = decodeURIComponent(i[1]), i[1]==="undefined" ? i[1] = true: "",i}));
@@ -176,4 +177,4 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
     output += pills.join(" • ")
     return output
 })()
-}
+}}
