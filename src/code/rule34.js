@@ -21,7 +21,7 @@ async function r34list(tags, options){
     options.index ??= 0;
     const qps = {
         page: "dapi",
-        tags,
+        tags: options.onepost ? "" : tags,
         s: "post",
         q: "index",
         json: "1",
@@ -99,6 +99,9 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
         if (Number.isNaN(onepost)) return err("--id=num value must be a number");
         if (onepost < 0) return err("--index=num value must be a positive number");
     }
+    if (args[0].startsWith("https://rule34.xxx/index.php?page=post&s=view&id=")) 
+        onepost = args[0].split("page=post&s=view&id=")[1]
+    
     let post;
     const tags = args.filter(arg => !arg.startsWith("--"));
     try {
@@ -173,6 +176,4 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […argu
     output += pills.join(" • ")
     return output
 })()
-}//} })("meow")
-
-// (lemondrops) (hilltops)
+}
