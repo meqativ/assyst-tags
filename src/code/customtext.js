@@ -467,6 +467,7 @@ const faces = {
 	},
 }
 
+ctx.customtext ??= {};
 const flag = (f) => args.find(arg => arg.startsWith("--"+f));
 const getarg = (name) => {
 	const h = args.find(arg => arg.startsWith("--"+name+"="))?.split?.("=");
@@ -520,14 +521,15 @@ const convert = (text, face, bold=false, reverse=false) => {
 	}
 	return text;
 }
-
-ctx.customtext ??= {};
+const new_faces = {};
 if (typeof ctx?.customtext?.overrides === "object") {
-	for (const face of ctx.customtext.overrides) {
-		faces[face] ??= ctx.customtext.overrides[face];
+	for (const face of Object.keys(ctx.customtext.overrides)) {
+		if (faces[face] === undefined) {
+			faces[face] = ctx.customtext.overrides[face];
+			new_faces[face] = faces[face];
+		}
 	}
 }
-
 if (flag("export")) ctx.customtext.convert = convert;
 
 args = args.join(" ").split(" ");
@@ -536,12 +538,13 @@ const text = args.filter(arg => !arg.startsWith("--")).join(" ");
 
 function make(args) {
 	const maxWidthNames = args.flatMap(arg => arg[0])
-	.reduce((r, name) => name.length > r ? name.length : r, 0)
+		.reduce((r, name) => name.length > r ? name.length : r, 0)
 	return args
-	.map(arg => ` --${arg[0].padEnd(maxWidthNames)}  ${arg[1]}`)
-	.join("\n")
+		.map(arg => ` --${arg[0].padEnd(maxWidthNames)}  ${arg[1]}`)
+		.join("\n")
 }
 if (flag("export")) ctx.customtext.makeArguments = make;
+
 let [ tagPrefix, prefix, commandName, tagName ] = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
 if (flag("help") || (args.length === 1 && args[0] === "")) {
 
@@ -550,7 +553,7 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 						`[36mArguments:[39m\n${make([
 							[  "help", "shows this help message"																						],
 							[  "face", "choose the version of the custom text"															],
-							[ "faces", "show available faces"																								],
+							[ "faces", "list available faces"																								],
 							[  "bold", "uses the bold variant of the face (if available)"										],
 							["export", convert("advanced", "fullwidth", true)+"exports some of the internal functions to ctx.customtext"	],
 							[  "undo", "reverses applying the face"																					]
@@ -571,10 +574,11 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 const face = getarg("face");
 
 if (flag("faces"))
-	return `Known faces:\n` + Object.keys(faces).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n")
+	return `## Known faces:\n` + Object.keys(faces).filter(key => !Object.keys(new_faces).includes(key)).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") + ((new_faces) ? `\n## \`ctx.customtext.overrides\` faces:\n` + Object.keys(new_faces).map(face => `- \`${face}\` (normal: ${new_faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${new_faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") : "")
 
-if (!text) return `Please input some text to transform with a face.\n`+
-	`Example: \`${tagPrefix} ${flag("bold") ? "--bold " : ""}--face=${face?.value ?? "cursive"} placeholder text\``;
+let mainTag = ["customtext", "ct"].includes(tagName)
+if (!text) return `Please input some text${mainTag ? "to transform with a face" : ""}.\n`+
+	`Example: \`${tagPrefix} ${mainTag ? `${flag("bold") ? "--bold " : ""}--face=${face?.value ?? "cursive"}` : ""} placeholder text\``;
 if (!face)
 	return `Please specify a \`face\` to use for the custom text.\n`+
 		`Example: \`${tagPrefix} ${flag("bold") ? "--bold " : ""}--face=cursive ${text}\``;
