@@ -51,7 +51,7 @@ const err = (text) => `💥 \`\`${text}\`\``;
 
 (async () => {
     if (flag("help")) {
-        let stuff = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
+        let stuff = message?.content?.match?.(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["/tag run arguments:", "/", " tag run", "arguments:"];
         const tagPrefix = stuff[0]; // full prefix for the tag run [0] eg. "-t rule34"
         const prefix = stuff[1]; //              used bot prefix [1] eg. "-"
         const commandName = stuff[2]; //       used command name [2] eg. "t" or "tag"
@@ -63,9 +63,9 @@ const err = (text) => `💥 \`\`${text}\`\``;
                 .map(arg => ` --${arg[0].padEnd(maxWidthNames)}  ${arg[1]}`)
                 .join("\n")
         }
-return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […arguments…] […query…]\n`+
-        `[30mNote: […query…] could be anything that doesn't start with "--" (arguments start with that, they're split by space)[39m\n\n`+
-        `[36mArguments:[39m\n${make([
+return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […args…] […query…]\n`+
+        `[30mNote: […query…] could be anything that doesn't start with "--" (args start with that, they're split by space)[39m\n\n`+
+        `[36mArgs:[39m\n${make([
         [              "help", "shows this help message"                                 ],
         [               "raw", "returns the raw JSON of the post"                        ],
         [            "id=num", "returns a specific post by id"                           ],

@@ -590,7 +590,7 @@ function make(args) {
 }
 if (flag("export")) ctx.customtext.makeArguments = make;
 
-let [ tagPrefix, prefix, commandName, tagName ] = message.content.match(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
+let [ tagPrefix, prefix, commandName, tagName ] = message?.content?.match?.(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
 if (flag("help") || (args.length === 1 && args[0] === "")) {
 
 	return `\`\`\`ansi\n[33mUsage:[39m ${tagPrefix} […arguments…] […query…]\n`+
