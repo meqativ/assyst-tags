@@ -586,7 +586,7 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 const face = getarg("face");
 
 if (flag("faces"))
-	return `## Known faces:\n` + Object.keys(faces).filter(key => !Object.keys(new_faces).includes(key)).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") + ((new_faces) ? `\n## \`ctx.customtext.overrides\` faces:\n` + Object.keys(new_faces).map(face => `- \`${face}\` (normal: ${new_faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${new_faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") : "")
+	return `## Known faces:\n` + Object.keys(faces).filter(key => !Object.keys(new_faces).includes(key)).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") + (Object.keys(new_faces).length > 0) ? `\n## \`ctx.customtext.overrides\` faces:\n` + Object.keys(new_faces).map(face => `- \`${face}\` (normal: ${new_faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${new_faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") : "")
 
 let mainTag = ["customtext", "ct"].includes(tagName)
 if (!text) return `Please input some text${mainTag ? "to transform with a face" : ""}.\n`+
