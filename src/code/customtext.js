@@ -4,6 +4,18 @@ const EMOJIS = {
 	y: "✅",
 }
 const faces = {
+	smallcaps: {
+		meta: ["lower"],
+		normal: {
+			a: "ᴀ",		b: "ʙ",		c: "ᴄ",		d: "ᴅ",
+			e: "ᴇ",		f: "ꜰ",		g: "ɢ",		h: "ʜ",
+			i: "ɪ",		j: "ᴊ",		k: "ᴋ",		l: "ʟ",
+			m: "ᴍ",		n: "ɴ",		o: "ᴏ",		p: "ᴘ",
+			q: "ǫ",		r: "ʀ",		s: "ꜱ",		t: "ᴛ",
+			u: "ᴜ",		v: "ᴠ",		w: "ᴡ",		x: "x",
+			y: "ʏ",		z: "ᴢ",
+		},
+	},
 	dancing_moji: {
 		meta: ["lower"],
 		normal: {
@@ -551,12 +563,12 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 	return `\`\`\`ansi\n[33mUsage:[39m ${tagPrefix} […arguments…] […query…]\n`+
 						`[30mNote: […query…] could be anything that doesn't start with "--" (arguments start with that, they're split by space)[39m\n\n`+
 						`[36mArguments:[39m\n${make([
-							[  "help", "shows this help message"																						],
-							[  "face", "choose the version of the custom text"															],
-							[ "faces", "list available faces"																								],
-							[  "bold", "uses the bold variant of the face (if available)"										],
+							[  "help", "shows this help message"																																					],
+							[  "face", "choose the version of the custom text"																														],
+							[ "faces", "list available faces"																																							],
+							[  "bold", "uses the bold variant of the face (if available)"																									],
 							["export", convert("advanced", "fullwidth", true)+"exports some of the internal functions to ctx.customtext"	],
-							[  "undo", "reverses applying the face"																					]
+							[  "undo", "tries reversing applying the face"																																]
 						])}\n\n`+
 						`[36mExamples: [39m\n`+
 						[
