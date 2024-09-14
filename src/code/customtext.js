@@ -4,6 +4,28 @@ const EMOJIS = {
 	y: "✅",
 }
 const faces = {
+	emojis: {
+		meta: ["invisSeparators"],
+		normal: {
+			" ": "🟦",
+			10: "🔟",
+			1: "1️⃣",		2: "2️⃣",		3: "3️⃣",
+			4: "4️⃣",		5: "5️⃣",		6: "6️⃣",
+			7: "7️⃣",		8: "8️⃣",		9: "9️⃣",
+								0: "0️⃣",
+
+			a: "🇦",		b: "🇧",		c: "🇨",		d: "🇩",
+			e: "🇪",		f: "🇫",		g: "🇬",		h: "🇭",
+			i: "🇮",		j: "🇯",		k: "🇰",		l: "🇱",
+			m: "🇲",		n: "🇳",		o: "🇴",		p: "🇵",
+			q: "🇶",		r: "🇷",		s: "🇸",		t: "🇹",
+			u: "🇺",		v: "🇻",		w: "🇼",		x: "🇽",
+			y: "🇾",		z: "🇿",
+								"↑": "⬆️",
+			"←": "⬅️",					 "→": "➡️",
+								"↓": "⬇️",
+		}
+	},
 	smallcaps: {
 		meta: ["lower"],
 		normal: {
@@ -525,7 +547,7 @@ const convert = (text, face, bold=false, reverse=false) => {
 	if (Face?.meta?.includes?.("reverse")) text = [...text].reverse().join("")
 	if (Face?.meta?.includes?.("upper")) text = text.toUpperCase()
 	if (Face?.meta?.includes?.("lower")) text = text.toLowerCase()
-
+	if (Face?.meta?.includes?.("invisSeparators")) text = [...text].join(""); // <- there's an invisible character in that string
 	let map = bold ? Face.bold : Face.normal;
 	let words = map.words;
 	delete map.words;
