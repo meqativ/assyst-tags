@@ -5,7 +5,7 @@ const EMOJIS = {
 }
 const faces = {
 	emojis: {
-		meta: ["invisSeparators"],
+		meta: ["invisSeparators", "lower"],
 		normal: {
 			" ": "⃣",
 			10: "🔟",
