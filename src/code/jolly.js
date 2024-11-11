@@ -1,7 +1,7 @@
 {set:avatar|{if:{js:/<@!?(\d+)>/.test("{tryarg:0}")}|=|true|{avatar:{tryarg:0}}|{avatar:{userid}}}}{js:
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
-    let avatarURL = `{get:avatar}`//{ignore:
+    let avatarURL = `{get:avatar}`{ignore:
     function discordue(input) {
         const em = input.match(/<(a?):\w+:(\d+)>/);
         if (em) {
@@ -30,5 +30,5 @@
     
         return image.encode()   
     })();
-    //}
+    }
 }
