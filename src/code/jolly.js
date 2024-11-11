@@ -1,10 +1,16 @@
 {set:parsed|{js:"{tryarg:0}".match(/<@!?(\d+)>/)?.[1]}}{set:avatar|{if:{get:parsed}|=|undefined|{avatar:{tryarg:0}}|{avatar:{get:parsed}}}}{js:
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
-    let avatarURL = `{get:avatar}`;{ignore:
-    let em; em = (em=args[0].match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=512&quality=lossless` : undefined)
-    let imageURL = message?.attachments?.[0] ? message.attachments[0].url : em;
-    if (avatarURL) imageURL = avatarURL+"?size=512";
+    let avatarURL = `{get:avatar}`;
+    let emojiURL; emojiURL = (emojiURL=args[0].match(/<(a?):\w+:(\d+)>/), emojiURL ? `https://cdn.discordapp.com/emojis/${emojiURL[2]}.png?size=512&quality=lossless` : undefined)
+    let imageURL = message?.attachments?.[0]
+        ? message.attachments[0].url
+        : message?.referenced_message?.attachments?.[0]
+            ? message.referenced_message.attachments[0].url
+            : message?.referenced_message?.embeds?.[0]?.image?.url
+                ? message.referenced_message.embeds[0].image.url
+                : emojiURL;
+    if (avatarURL) imageURL = avatarURL.replace("?size=1024", "?size=512");
     (async()=>{ 
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
         if(image.width > image.height) image.crop((image.width - image.height)/2, 0, image.height, image.height); 
