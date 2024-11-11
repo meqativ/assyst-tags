@@ -1,10 +1,10 @@
 {set:avatar|{if:{js:/<@!?(\d+)>/.test("{tryarg:0}")}|=|true|{avatar:{tryarg:0}}|{avatar:{userid}}}}{js:
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
-    let avatarURL = `{get:avatar}`{ignore:
-    let em; em = (em=input.match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless` : undefined)
-    let parsed = discordue(args[0]) \|\| em;
-    const imageURL = message?.attachments?.[0] ? message.attachments[0].url : parsed;
+    let avatarURL = `{get:avatar}`;{ignore:
+    let em; em = (em=args[0].match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless` : undefined)
+    const imageURL = message?.attachments?.[0] ? message.attachments[0].url : em;
+    imageURL ??= avatarURL;
     (async()=>{  
         return imageURL
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
