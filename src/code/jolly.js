@@ -2,13 +2,8 @@
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
     let avatarURL = `{get:avatar}`{ignore:
-    function discordue(input) {
-        const em = input.match(/<(a?):\w+:(\d+)>/);
-        if (em) {
-            return `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless`
-        }
-    }
-    let parsed = discordue(args[0]) \|\| avatarURL
+    let em; em = (em=input.match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless` : undefined)
+    let parsed = discordue(args[0]) \|\| em;
     const imageURL = message?.attachments?.[0] ? message.attachments[0].url : parsed;
     (async()=>{  
         return imageURL
