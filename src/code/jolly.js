@@ -8,7 +8,7 @@
             return `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless`
         }
     }
-    let parsed = discordue(args[0]) | avatarURL
+    let parsed = discordue(args[0]) \|\| avatarURL
     const imageURL = message?.attachments?.[0] ? message.attachments[0].url : parsed;
     (async()=>{  
         return imageURL
