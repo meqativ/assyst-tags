@@ -9,7 +9,7 @@
         }
     }
     let parsed = discordue(args[0]) | avatarURL
-    const imageURL = message?.attachments?.[0] ? message.attachments.[0].url : parsed
+    const imageURL = message?.attachments?.[0] ? message.attachments[0].url : parsed
     (async()=>{  
         return imageURL
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
