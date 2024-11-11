@@ -13,7 +13,7 @@
         let snow = await fetch("https://meqativ.github.io/assyst-tags/src/assets/oulays/snowfall.gif").then(x => x.arrayBuffer()).then(ImageScript.decode);  
         
         image.composite(bg1.fit(image.width, image.height), 0,0);
-        if (args.join(" ").includes("--animated")) {
+        if (args.join(" ").includes("--animated-snow")) {
             const outFrames = Array.from({length:snow.length}).map(()=>image.clone());   
             outFrames.map((f,i)=>{   
             const snowOverlay = snow[i];   
@@ -22,9 +22,10 @@
             })
             return new ImageScript.GIF(outFrames).encode()
         } else {
-            image.composite(snow[0].fit(image.width, image.height), 0,0)
+            ctx.textOutput = "You can use \"--animated-snow\" or just \"-snow\"(outputs as png)"
+            if (args.join(" ").includes("--snow")) image.composite(snow[0].fit(image.width, image.height), 0,0)
             return image.encode()
         }
     })();
     }
-}{get:parsed} /// . /// {get:avatar}
+}{js:ctx?.textOutput ?? ""}
