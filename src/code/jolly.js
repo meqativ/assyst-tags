@@ -2,9 +2,9 @@
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
     let avatarURL = `{get:avatar}`;{ignore:
-    let em; em = (em=args[0].match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless` : undefined)
+    let em; em = (em=args[0].match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=512&quality=lossless` : undefined)
     let imageURL = message?.attachments?.[0] ? message.attachments[0].url : em;
-    imageURL ??= avatarURL;
+    if (avatarURL) imageURL = avatarURL+"?size=512";
     (async()=>{ 
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
         if(image.width > image.height) image.crop((image.width - image.height)/2, 0, image.height, image.height); 
