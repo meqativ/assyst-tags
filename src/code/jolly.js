@@ -17,11 +17,7 @@
                         ? message.referenced_message.embeds[0].image.url 
                         : message.referenced_message.embeds[0].thumbnail?.url)
                     : emojiURL;
-
-
-
-
-    if (avatarURL) imageURL = avatarURL.replace("?size=1024", "?size=512");
+    if (avatarURL) imageURL ??= avatarURL.replace("?size=1024", "?size=512");
     (async()=>{ 
         return imageURL
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
