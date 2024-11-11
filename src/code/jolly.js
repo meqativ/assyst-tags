@@ -22,7 +22,7 @@
             })
             return new ImageScript.GIF(outFrames).encode()
         } else {
-            ctx.textOutput = "You can use \"--animated-snow\" or just \"-snow\"(outputs as png)"
+            ctx.textOutput = `You can use "--animated-snow" or just "-snow"(outputs as png)`
             if (args.join(" ").includes("--snow")) image.composite(snow[0].fit(image.width, image.height), 0,0)
             return image.encode()
         }
