@@ -12,6 +12,7 @@
                 : emojiURL;
     if (avatarURL) imageURL = avatarURL.replace("?size=1024", "?size=512");
     (async()=>{ 
+        return imageURL
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
         if(image.width > image.height) image.crop((image.width - image.height)/2, 0, image.height, image.height); 
         else if(image.height > image.width) image.crop(0, (image.height- image.width)/2, image.width, image.width);   
