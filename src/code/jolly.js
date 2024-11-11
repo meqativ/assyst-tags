@@ -1,4 +1,4 @@
-{set:parsed|{js:"{tryarg:0}".match(/<@!?(\d+)>/)?.[1]}}{set:avatar|{if:{get:parsed}|=|undefined|{avatar:{get:parsed}}|{avatar:{tryarg:0}}}}{js:
+{set:parsed|{js:"{tryarg:0}".match(/<@!?(\d+)>/)?.[1]}}{set:avatar|{if:{get:parsed}|=|undefined|{avatar:{tryarg:0}}|{avatar:{get:parsed}}}}{js:
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
     let avatarURL = `{get:avatar}`;{ignore:
