@@ -1,7 +1,7 @@
 {set:parsed|{js:"{tryarg:0}".match(/<@!?(\d+)>/)?.[1]}}{set:avatar|{if:{get:parsed}|=|undefined|{avatar:{tryarg:0}}|{avatar:{get:parsed}}}}{js:
     args = args.join(" ").split(" ")
     let lastattachment = `{lastattachment}`;
-    let avatarURL = `{get:avatar}`;
+    let avatarURL = `{get:avatar}`;{ignore:
     let emojiURL; emojiURL = (emojiURL=args[0].match(/<(a?):\w+:(\d+)>/), emojiURL ? `https://cdn.discordapp.com/emojis/${emojiURL[2]}.png?size=512&quality=lossless` : undefined)
     let imageURL = message?.attachments?.[0]
         ? message.attachments[0].url
