@@ -12,17 +12,19 @@
         let bg1 = await fetch("https://meqativ.github.io/assyst-tags/src/assets/oulays/jolly.png").then(x => x.arrayBuffer()).then(ImageScript.decode);   
         let snow = await fetch("https://meqativ.github.io/assyst-tags/src/assets/oulays/snowfall.gif").then(x => x.arrayBuffer()).then(ImageScript.decode);  
         
-        image.composite(bg1.fit(image.width, image.height), 0,0);  
+        image.composite(bg1.fit(image.width, image.height), 0,0);
         if (args.join(" ").includes("--animated")) {
-            const outFrames = Array.from({length:snow.length}).map(()=>outFrameZero.clone());   
+            const outFrames = Array.from({length:snow.length}).map(()=>image.clone());   
             outFrames.map((f,i)=>{   
             const snowOverlay = snow[i];   
             f.composite(snowOverlay.fit(f.width, f.height), 0, 0)   
             outFrames[i] = ImageScript.Frame.from(f)   
             })
-        } else image.composite(bg2.fit(image.width, image.height), 0,0);  
-    
-        return image.encode()   
+            return new ImageScript.GIF(outFrames).encode()
+        } else {
+            image.composite(snow[0].fit(image.width, image.height), 0,0)
+            return image.encode()
+        }
     })();
     }
 }
