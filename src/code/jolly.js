@@ -4,10 +4,10 @@
     let avatarURL = `{get:avatar}`;{ignore:
     let emojiURL; emojiURL = (emojiURL=args[0].match(/<(a?):\w+:(\d+)>/), emojiURL ? `https://cdn.discordapp.com/emojis/${emojiURL[2]}.png?size=512&quality=lossless` : undefined)
     let imageURL = message?.attachments?.[0]?.url
-    \|\| message?.embeds?.[0]?.image?.url
-    \|\| message?.referenced_message?.attachments?.[0]?.url
-    \|\| message?.referenced_message?.embeds?.[0]?.image?.url
-    \|\| emojiURL;
+    || message?.embeds?.[0]?.image?.url
+    || message?.referenced_message?.attachments?.[0]?.url
+    || message?.referenced_message?.embeds?.[0]?.image?.url
+    || emojiURL;
 
     if (avatarURL) imageURL = avatarURL.replace("?size=1024", "?size=512");
     (async()=>{ 
