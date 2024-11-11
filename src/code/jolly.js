@@ -6,13 +6,19 @@
     let imageURL = 
     message?.attachments?.[0]
         ? message.attachments[0].url
-        : message?.embeds?.[0]?.image
-            ? message.embeds[0].image.url
+        : message?.embeds?.[0]?.type === "image"
+            ? (message.embeds[0].image?.url 
+                ? message.embeds[0].image.url 
+                : message.embeds[0].thumbnail?.url)
             : message?.referenced_message?.attachments?.[0]
                 ? message.referenced_message.attachments[0].url
-                : message?.referenced_message?.embeds?.[0]?.image
-                    ? message.referenced_message.embeds[0].image.url
+                : message?.referenced_message?.embeds?.[0]?.type === "image"
+                    ? (message.referenced_message.embeds[0].image?.url 
+                        ? message.referenced_message.embeds[0].image.url 
+                        : message.referenced_message.embeds[0].thumbnail?.url)
                     : emojiURL;
+
+
 
 
     if (avatarURL) imageURL = avatarURL.replace("?size=1024", "?size=512");
