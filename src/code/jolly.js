@@ -27,4 +27,4 @@
         }
     })();
     }
-}
+}{get:parsed} /// . /// {get:avatar}
