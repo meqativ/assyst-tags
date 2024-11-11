@@ -3,7 +3,7 @@
     let lastattachment = `{lastattachment}`;
     let avatarURL = `{get:avatar}`;{ignore:
     let em; em = (em=args[0].match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless` : undefined)
-    const imageURL = message?.attachments?.[0] ? message.attachments[0].url : em;
+    let imageURL = message?.attachments?.[0] ? message.attachments[0].url : em;
     imageURL ??= avatarURL;
     (async()=>{  
         return imageURL
