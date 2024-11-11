@@ -5,8 +5,7 @@
     let em; em = (em=args[0].match(/<(a?):\w+:(\d+)>/), em ? `https://cdn.discordapp.com/emojis/${em[2]}.png?size=256&quality=lossless` : undefined)
     let imageURL = message?.attachments?.[0] ? message.attachments[0].url : em;
     imageURL ??= avatarURL;
-    (async()=>{  
-        return imageURL
+    (async()=>{ 
         let image = await fetch(imageURL).then(x => x.arrayBuffer()).then(ImageScript.decode); 
         if(image.width > image.height) image.crop((image.width - image.height)/2, 0, image.height, image.height); 
         else if(image.height > image.width) image.crop(0, (image.height- image.width)/2, image.width, image.width);   
