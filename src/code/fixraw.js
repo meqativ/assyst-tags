@@ -18,10 +18,11 @@ if (tag_src.includes("```")) warn.push("codeblocks detected, make sure to replac
 if (args.includes("--raw")) return tag_src;
 if (!args.includes("--backtick-enjoyer")) tag_src = tag_src.replaceAll("```","` ``");
 if (!args.includes("-b")) tag_src = tag_src.replaceAll("```","` ``")
-let /*me*/ out = warn.reduce((acc, current) => acc + "-# " + current + '\n', '')+"```"+lang+"\n[tag_src]```"
+const genOut = () => warn.reduce((acc, current) => acc + "-# :warning: " + current + '\n', '')+"```"+lang+"\n[tag_src]```"
+let /*me*/ out = genOut()
 if ((out.length - 9) + tag_src.length > 2000) {
   warn.push("tag contents cropped, too long to display fully")
-  out = warn.reduce((acc, current) => acc + "-# " + current + '\n', '')+"```"+lang+"\n[tag_src]```"
+  out = genOut()
   tag_src = tag_src.slice(0, 2000 - (out.length - 9))
 }
   return out.replace("[tag_src]", tag_src)
