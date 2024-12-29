@@ -1,4 +1,9 @@
-{js:{ignore:(async()=>{
+{js:const _face ="{get:face}";{ignore:(async()=>{
+	const OUT = (thing) => {console.log(thing); return thing}
+if (globalThis['discord']) { // notsobot
+	message = discord.message
+	args = discord.variables.__args
+}
 const EMOJIS = {
 	x: "<:x2:1244369141490516008>",
 	y: "✅",
@@ -501,10 +506,11 @@ const faces = {
 		},
 	},
 }
-
+let ctx = globalThis['ctx'] ?? discord.storage.user;
 ctx.customtext ??= {};
 const flag = (f) => args.find(arg => arg.startsWith("--"+f));
 const getarg = (name) => {
+	if (name == "face" && _face !== "") return {name: "--face", value: _face};
 	const h = args.find(arg => arg.startsWith("--"+name+"="))?.split?.("=");
 	if (!h) return undefined;
 	return { name: h[0], value: h[1] };
@@ -583,7 +589,7 @@ if (flag("export")) ctx.customtext.makeArguments = make;
 let [ tagPrefix, prefix, commandName, tagName ] = message?.content?.match?.(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i) || ["@Assyst#0384 tag <name>", "@Assyst#0384", " tag", "<name>"];
 if (flag("help") || (args.length === 1 && args[0] === "")) {
 
-	return `\`\`\`ansi\n[33mUsage:[39m ${tagPrefix} […arguments…] […query…]\n`+
+	return OUT(`\`\`\`ansi\n[33mUsage:[39m ${tagPrefix} […arguments…] […query…]\n`+
 		`[30mNote: […query…] could be anything that doesn't start with "--" (arguments start with that, they're split by space)[39m\n\n`+
 		`[36mArguments:[39m\n${make([
 			["help",	"shows this help message"	],
@@ -604,26 +610,26 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 			` ${tagPrefix} --face=medieval some medieval looking text`,
 			` ${tagPrefix} --face=wingdings use the faces argument to see all of them`,
 			` ${tagPrefix} --face=cursive --undo 𝓣𝓱𝓮 𝓫𝓪𝓵𝓵𝓼 𝓱𝓪𝓿𝓮 𝓼𝓹𝓸𝓴𝓮𝓷`,
-		].join("\n")+"```";
+		].join("\n")+"```");
 }
 const face = getarg("face");
 
 if (flag("faces"))
-	return `## Known faces:\n` + Object.keys(faces).filter(key => !Object.keys(new_faces).includes(key)).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") + ((Object.keys(new_faces).length > 0) ? `\n## \`ctx.customtext.overrides\` faces:\n` + Object.keys(new_faces).map(face => `- \`${face}\` (normal: ${new_faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${new_faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") : "")
+	return OUT(`## Known faces:\n` + Object.keys(faces).filter(key => !Object.keys(new_faces).includes(key)).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") + ((Object.keys(new_faces).length > 0) ? `\n## \`ctx.customtext.overrides\` faces:\n` + Object.keys(new_faces).map(face => `- \`${face}\` (normal: ${new_faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${new_faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") : ""))
 
 let mainTag = ["customtext", "ct"].includes(tagName)
-if (!text) return `Please input some text${mainTag ? "to transform with a face" : ""}.\n`+
-	`Example: \`${tagPrefix} ${mainTag ? `${flag("bold") ? "--bold " : ""}--face=${face?.value ?? "cursive"}` : ""} placeholder text\``;
+if (!text) return OUT(`Please input some text${mainTag ? "to transform with a face" : ""}.\n`+
+	`Example: \`${tagPrefix} ${mainTag ? `${flag("bold") ? "--bold " : ""}--face=${face?.value ?? "cursive"}` : ""} placeholder text\``);
 if (!face)
-	return `Please specify a \`face\` to use for the custom text.\n`+
-		`Example: \`${tagPrefix} ${flag("bold") ? "--bold " : ""}--face=cursive ${text}\``;
+	return OUT(`Please specify a \`face\` to use for the custom text.\n`+
+		`Example: \`${tagPrefix} ${flag("bold") ? "--bold " : ""}--face=cursive ${text}\``);
 if (!Object.keys(faces).includes(face.value))
-	return `Unknown Face \`${face.value}\`. Please use one of the following: ${Object.keys(faces).join(", ")}.\n`+
-		`Example: \`${tagPrefix} ${flag("bold") ? "--bold " : ""}--face=cursive ${text}\``;
+	return OUT(`Unknown Face \`${face.value}\`. Please use one of the following: ${Object.keys(faces).join(", ")}.\n`+
+		`Example: \`${tagPrefix} ${flag("bold") ? "--bold " : ""}--face=cursive ${text}\``);
 if (!faces[face.value]["normal"])
-	return `Face \`${face.value}\` doesn't have a normal variant.\n`;
+	return OUT(`Face \`${face.value}\` doesn't have a normal variant.\n`);
 if (!faces[face.value]["bold"] && flag("bold"))
-	return `Face \`${face.value}\` doesn't have a bold variant.\n`;
+	return OUT(`Face \`${face.value}\` doesn't have a bold variant.\n`);
 
-return convert(text, face.value, flag("bold"), flag("undo"))
+return OUT(convert(text, face.value, flag("bold"), flag("undo")))
 })()}}

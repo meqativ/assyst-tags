@@ -1,11 +1,11 @@
-{js:// await ((IN) => \{
-// let args = IN.split(" ");
-// let message = \{content: `t rule34 $\{args.join(" ")\}`\};
-let maxTagAmount = +"{get:maxTagAmount}";
-let spoiler = "{get:spoiler}" === "true" ? true : false; // not implemented
-let forceNoTags = "{get:forceNoTags}" === "true" ? true : false;
-{ignore:
-if (Number.isNaN(maxTagAmount)) maxTagAmount = 15;
+{js:{ignore:
+	const OUT = (thing) => {console.log(thing); return thing}
+if (globalThis['discord']) { // notsobot
+	message = discord.message
+	args = discord.variables.__args
+}
+let forceNoTags = false;
+let maxTagAmount = 15;
 let temp;
 const fromQueryParams = (queryParams) => Object.fromEntries(queryParams.split('&').map((i)=>{return i = i.split('='), i[1] = decodeURIComponent(i[1]), i[1]==="undefined" ? i[1] = true: "",i}));
 const toQueryParams = (obj) => Object.entries(obj).map(([k,v])=>`${k}${v === true ? "" : "="}${v === true ? "" : encodeURIComponent(
@@ -39,7 +39,9 @@ async function r34list(tags, options){
     return JSON.parse(rawResponse)
 }
 
-args = args.join(" ").split(" ");
+args = message?.content
+? args.length > 0 ? (args[0]+message.content.split(args[0])[1]).split(" ") : []
+: args; // 😔
 const flag = (f) => args.find(arg => arg.startsWith("--"+f));
 const getarg = (name) => {
     const h = args.find(arg => arg.startsWith("--"+name+"="))?.split?.("=");
@@ -63,7 +65,7 @@ const err = (text) => `💥 \`\`${text}\`\``;
                 .map(arg => ` --${arg[0].padEnd(maxWidthNames)}  ${arg[1]}`)
                 .join("\n")
         }
-return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […args…] […query…]\n`+
+return OUT(`\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […args…] […query…]\n`+
         `[30mNote: […query…] could be anything that doesn't start with "--" (args start with that, they're split by space)[39m\n\n`+
         `[36mArgs:[39m\n${make([
         [              "help", "shows this help message"                                 ],
@@ -84,21 +86,21 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […args
             ` ${tagPrefix} --id=7582834`,
             ` ${tagPrefix} --id=7582834 --raw`
         ].join("\n")+
-`\`\`\``
+`\`\`\``)
     }
     let rawIndex = getarg("index")?.value,
         index;
     if (rawIndex) {
         index = parseInt(rawIndex);
-        if (Number.isNaN(index)) return err("--index=num value must be a number");
-        if (index < 0) return err("--index=num value must be a positive number");
+        if (Number.isNaN(index)) return OUT(err("--index=num value must be a number"));
+        if (index < 0) return OUT(err("--index=num value must be a positive number"));
     }
     let rawId = getarg("id")?.value,
         onepost = false;
     if (rawId) {
         onepost = parseInt(rawId);
-        if (Number.isNaN(onepost)) return err("--id=num value must be a number");
-        if (onepost < 0) return err("--index=num value must be a positive number");
+        if (Number.isNaN(onepost)) return OUT(err("--id=num value must be a number"));
+        if (onepost < 0) return OUT(err("--index=num value must be a positive number"));
     }
     if (args[0].startsWith("https://rule34.xxx/index.php?page=post&s=view&id=")) 
         onepost = args[0].split("page=post&s=view&id=")[1]
@@ -109,16 +111,16 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […args
         post = (await r34list(tags, { index, onepost }))[0];
     } catch (error) {
         const errorCodeblock = `\n\`\`\`js\n${error?.[1]?.stack??error?.[1]??error}\`\`\``
-        if (error[0] === 404) return err("Post Not Found");
-        if (error[0] === 416 && index) return err("--index=num too far, api limit");
-        if (error[0] === 416) return err(`Something went wrong`) + errorCodeblock;
+        if (error[0] === 404) return OUT(err("Post Not Found"));
+        if (error[0] === 416 && index) return OUT(err("--index=num too far, api limit"));
+        if (error[0] === 416) return OUT(err(`Something went wrong`) + errorCodeblock);
         
-        return err(`An error ocurred while trying to get the post`) + errorCodeblock
+        return OUT(err(`An error ocurred while trying to get the post`) + errorCodeblock)
     }
-    if (post === undefined && index) return err("--index=num out of bounds");
+    if (post === undefined && index) return OUT(err("--index=num out of bounds"));
     
-    if (flag("raw")) return JSON.stringify(post, 0, 2);
-    if (flag("url")) return `<${post.file_url.split(" ")[0]}>`;
+    if (flag("raw")) return OUT(JSON.stringify(post, 0, 2));
+    if (flag("url")) return OUT(`<${post.file_url.split(" ")[0]}>`);
     
     
     
@@ -175,6 +177,6 @@ return `\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […args
         )
     // push pills
     output += pills.join(" • ")
-    return output
+    return OUT(output)
 })()
 }}
