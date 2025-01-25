@@ -1,7 +1,8 @@
 (()=>{
 const c = (val, or = () => false) => typeof val !== "number" || Number.isNaN(val) || or(val);
 const cStr = (val, or = () => false) => typeof val !== "string" || val.length < 1 || or(val);
-const mine_emoji = "{get:mine_emoji}" || "💣"
+const mine_emoji = "{get:mine_emoji}" || "💣";
+const xpld_emoji = "{get:xpld_emoji}" || "💥";
 function generateMinesweeper(config) {
     /*
     type ReturnValue = {
@@ -35,7 +36,7 @@ function generateMinesweeper(config) {
         config.strs ??= {}; const strs = config.strs;
         strs.cell ??= "🟦"; if (cStr(strs.cell)) throw new Error("Invalid strs.cell");
         strs.mine ??= mine_emoji; if (cStr(strs.mine)) throw new Error("Invalid strs.mine");
-        strs.boom ??= "💥"; if (cStr(strs.boom)) throw new Error("Invalid strs.boom");
+        strs.boom ??= xpld_emoji; if (cStr(strs.boom)) throw new Error("Invalid strs.boom");
         
         const defaultCells = [ "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣"/*, "9️⃣", "🔟" :trolleyzoom: */ ];
         strs.cells ??= defaultCells;
