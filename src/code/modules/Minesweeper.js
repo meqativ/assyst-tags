@@ -56,21 +56,21 @@ function generateMinesweeper(config) {
             board[i][ii] = 0;
         }
     }
-
+    const explosion = 3
     let placedMines = 0;
     while (placedMines < mineCount) {
         let row = Math.floor(Math.random() * config.rows),
             col = Math.floor(Math.random() * config.cols);
 
         if (board[row][col] === 0) {
-            board[row][col] = config.strs.boom;
+            board[row][col] = explosion;
             placedMines++;
         }
     }
 
     for (let row = 0; row < config.rows; row++) {
         for (let col = 0; col < config.cols; col++) {
-            if (board[row][col] === pickor(config.strs.boom)) continue;
+            if (board[row][col] === explosion) continue;
 
             let numAdjacentMines = 0;
             for (let i = -1 ; i <= 1; i++) {
@@ -83,7 +83,7 @@ function generateMinesweeper(config) {
                         adjacentRow < config.rows &&
                         adjacentCol >= 0   &&
                         adjacentCol < config.cols &&
-                        board[adjacentRow][adjacentCol] === pickor(config.strs.boom)
+                        board[adjacentRow][adjacentCol] === explosion
                     ) numAdjacentMines++;
                 }
             }
@@ -94,7 +94,7 @@ function generateMinesweeper(config) {
     
     return {
         board,
-        render: board.reduce((r,v,i) => r+(i===0?"":"\n")+v.reduce((r,v) => r+(config.spoilers ? `||${v}||` : v), ""),""),
+        render: board.map(a=>a===explosion?pickor(config.strs.boom):a).reduce((r,v,i) => r+(i===0?"":"\n")+v.reduce((r,v) => r+(config.spoilers ? `||${v}||` : v), ""),""),
         info: `\`${config.cols}\` by \`${config.rows}\` - \`${pickor(config.strs.mine)} ${mineCount}\` / \`${config.strs.cell} ${cellCount}\``,
         cellCount, mineCount
     };
