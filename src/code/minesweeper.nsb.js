@@ -9,7 +9,7 @@ if (globalThis['discord']) { // notsobot
 	message = discord.message
 	args = discord.variables.__args
 }
-const help = `**Usage:** ${message?.content?.match?.(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i)[0] || "</tag run:1267922331842511005> \`...\` arguments:"} \`{difficulty 1-[2]-5}\` \`{columns 1-[9]-inf}\` \`{rows 1-[9]-inf}\``
+const help = `**Usage:** ${message?.content?.match?.(/^([^ ]{0,14} ?)(tag|t) ([^ ^\n]{0,})/i)[0] || `</tag show:884581122208575528> name:${discord.tag.name} arguments:`} \`{difficulty 1-[2]-5}\` \`{columns 1-[9]-inf}\` \`{rows 1-[9]-inf}\``
 if (args[0] === "help") return OUT(help);
 try {
     if (!(typeof overrides === "object")) overrides = {};
