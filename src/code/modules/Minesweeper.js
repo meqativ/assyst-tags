@@ -97,7 +97,7 @@ function generateMinesweeper(config) {
         board,
         render: board
             .map(r => r.map(a => a === explosion ? pickor(config.strs.boom) : a))
-            .reduce((r, v, i) => r + (i === 0 ? "" : "\n" ) + v.reduce((r, v) => r + (config.spoilers && (config.ng === true ? ng_found === true ? true : (v === strs.cells[0] ? (ng_found = true, false) : true) : true) ? `||${v}||` : v), ""),""),
+            .reduce((r, v, i) => r + (i === 0 ? "" : "\n" ) + v.reduce((r, v) => r + (config.spoilers && (config.ng === true ? ng_found === true ? true : (v === config.strs.cells[0] ? (ng_found = true, false) : true) : true) ? `||${v}||` : v), ""),""),
         info: `\`${config.cols}\` by \`${config.rows}\` - \`${pickor(config.strs.mine)} ${mineCount}\` / \`${config.strs.cell} ${cellCount}\``,
         cellCount, mineCount
     };
