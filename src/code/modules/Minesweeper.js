@@ -1,6 +1,5 @@
 (()=>{
 const c = (val, or = () => false) => typeof val !== "number" || Number.isNaN(val) || or(val);
-const cStr = (val, or = () => false) => typeof val !== "string" || val.length < 1 || or(val);
 const rng = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
 const pickor = (arr) => Array.isArray(arr) ? arr[rng(0, arr.length-1)] : arr
 function generateMinesweeper(config) {
@@ -34,9 +33,9 @@ function generateMinesweeper(config) {
         config.spoilers   ??= true;
         
         config.strs ??= {}; const strs = config.strs;
-        strs.cell ??= "🟦"; if (cStr(strs.cell)) throw new Error("Invalid strs.cell");
-        strs.mine ??= "💣"; if (cStr(strs.mine)) throw new Error("Invalid strs.mine");
-        strs.boom ??= "💥"; if (cStr(strs.boom, (e)=>Array.isArray(e) && e.every(e=>cStr(e)))) throw new Error("Invalid strs.boom");
+        strs.cell ??= "🟦";
+        strs.mine ??= "💣";
+        strs.boom ??= "💥";
         
         const defaultCells = [ "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣"/*, "9️⃣", "🔟" :trolleyzoom: */ ];
         strs.cells ??= defaultCells;
