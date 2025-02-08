@@ -94,7 +94,7 @@ function generateMinesweeper(config) {
     
     return {
         board,
-        render: board.map(a=>a===explosion?pickor(config.strs.boom):a).reduce((r,v,i) => r+(i===0?"":"\n")+v.reduce((r,v) => r+(config.spoilers ? `||${v}||` : v), ""),""),
+        render: board.map(r=>r.map(a=>a===explosion?pickor(config.strs.boom):a)).reduce((r,v,i) => r+(i===0?"":"\n")+v.reduce((r,v) => r+(config.spoilers ? `||${v}||` : v), ""),""),
         info: `\`${config.cols}\` by \`${config.rows}\` - \`${pickor(config.strs.mine)} ${mineCount}\` / \`${config.strs.cell} ${cellCount}\``,
         cellCount, mineCount
     };
