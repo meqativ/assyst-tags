@@ -31,6 +31,7 @@ function generateMinesweeper(config) {
         config.cols       ??= 9; if (c(config.cols,       (c) => c < 1         )) throw new Error("Invalid column amount");
         config.rows       ??= 9; if (c(config.rows,       (r) => r < 1         )) throw new Error("Invalid row amount");
         config.spoilers   ??= true;
+        config.ng ??= false; // no guessing
         
         config.strs ??= {}; const strs = config.strs;
         strs.cell ??= "🟦";
@@ -91,10 +92,12 @@ function generateMinesweeper(config) {
             board[row][col] = config.strs.cells[numAdjacentMines];
         }
     }
-    
+    let ng_found = false;
     return {
         board,
-        render: board.map(r=>r.map(a=>a===explosion?pickor(config.strs.boom):a)).reduce((r,v,i) => r+(i===0?"":"\n")+v.reduce((r,v) => r+(config.spoilers ? `||${v}||` : v), ""),""),
+        render: board
+            .map(r => r.map(a => a === explosion ? pickor(config.strs.boom) : a))
+            .reduce((r, v, i) => r + (i === 0 ? "" : "\n" ) + v.reduce((r, v) => r + (config.spoilers && (config.ng === true ? ng_found === true ? true : (v === strs.cells[0] ? (ng_found = true, false) : true) : true) ? `||${v}||` : v), ""),""),
         info: `\`${config.cols}\` by \`${config.rows}\` - \`${pickor(config.strs.mine)} ${mineCount}\` / \`${config.strs.cell} ${cellCount}\``,
         cellCount, mineCount
     };
