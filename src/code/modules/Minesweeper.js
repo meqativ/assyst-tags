@@ -42,7 +42,6 @@ function generateMinesweeper(config) {
         if (!Array.isArray(strs.cells)) throw new Error("Cells must be an array of strings to represent the cell as");
         for (let i = 0; i < defaultCells.length; i++) {
             strs.cells[i] ??= defaultCells[i];
-            if (cStr(strs.cells[i])) throw new Error(`strs.cells[${i}] invalid`);
         }
         //if (strs.cells.length > defaultCells.length) "lol"
     })();
