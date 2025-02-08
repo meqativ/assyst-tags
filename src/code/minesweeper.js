@@ -12,6 +12,7 @@ try {
         difficulty: ntu(parseInt(args[0])),
         rows: ntu(parseInt(args[1])),
         cols: ntu(parseInt(args[2])),
+        ng: args.join(" ").includes("--no-guessing"),
         ... overrides
     });
     if (args.join(" ").includes("--plain")) return render
