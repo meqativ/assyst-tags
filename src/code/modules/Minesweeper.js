@@ -1,7 +1,8 @@
 (()=>{
 const c = (val, or = () => false) => typeof val !== "number" || Number.isNaN(val) || or(val);
 const cStr = (val, or = () => false) => typeof val !== "string" || val.length < 1 || or(val);
-    
+const rng = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pickor = (arr) => return Array.isArray(arr) ? arr[rng(0, arr.length-1)] : arr
 function generateMinesweeper(config) {
     /*
     type ReturnValue = {
@@ -71,7 +72,7 @@ function generateMinesweeper(config) {
 
     for (let row = 0; row < config.rows; row++) {
         for (let col = 0; col < config.cols; col++) {
-            if (board[row][col] === config.strs.boom) continue;
+            if (board[row][col] === pickor(config.strs.boom)) continue;
 
             let numAdjacentMines = 0;
             for (let i = -1 ; i <= 1; i++) {
@@ -84,7 +85,7 @@ function generateMinesweeper(config) {
                         adjacentRow < config.rows &&
                         adjacentCol >= 0   &&
                         adjacentCol < config.cols &&
-                        board[adjacentRow][adjacentCol] === config.strs.boom
+                        board[adjacentRow][adjacentCol] === pickor(config.strs.boom)
                     ) numAdjacentMines++;
                 }
             }
@@ -96,7 +97,7 @@ function generateMinesweeper(config) {
     return {
         board,
         render: board.reduce((r,v,i) => r+(i===0?"":"\n")+v.reduce((r,v) => r+(config.spoilers ? `||${v}||` : v), ""),""),
-        info: `\`${config.cols}\` by \`${config.rows}\` - \`${config.strs.mine} ${mineCount}\` / \`${config.strs.cell} ${cellCount}\``,
+        info: `\`${config.cols}\` by \`${config.rows}\` - \`${pickor(config.strs.mine)} ${mineCount}\` / \`${config.strs.cell} ${cellCount}\``,
         cellCount, mineCount
     };
 } // thanks @x8s on discord for logic impl (https://discord.com/users/218327212535840768)
