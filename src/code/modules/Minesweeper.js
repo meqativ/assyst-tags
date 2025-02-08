@@ -2,7 +2,7 @@
 const c = (val, or = () => false) => typeof val !== "number" || Number.isNaN(val) || or(val);
 const cStr = (val, or = () => false) => typeof val !== "string" || val.length < 1 || or(val);
 const rng = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
-const pickor = (arr) => return Array.isArray(arr) ? arr[rng(0, arr.length-1)] : arr
+const pickor = (arr) => Array.isArray(arr) ? arr[rng(0, arr.length-1)] : arr
 function generateMinesweeper(config) {
     /*
     type ReturnValue = {
