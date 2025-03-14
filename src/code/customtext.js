@@ -534,7 +534,7 @@ function fromEntries(entries) {
 if (flag("export")) {
 	ctx.customtext.escapeRegExp = escapeRegExp;
 	ctx.customtext.replaceAllCaseInsensitive = replaceAllCaseInsensitive;
-	ctx.customtext.fromEntries = replaceAllCaseInsensitive;
+	ctx.customtext.fromEntries = fromEntries;
 }
 const convert = (text, face, bold=false, reverse=false) => {
 	// * reverse - whether to unapply the face
@@ -605,7 +605,7 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 			` ${tagPrefix} --face=cursive hi this is some example idk`,
 			` ${tagPrefix} --face=cursive another example but this will be bold --bold`,
 			` ${tagPrefix} --face=cursive --bold you can also put this anywhere in the text`,
-			` ${tagPrefix} --face=cursive if the word starts with --bold it's gonna be filtered out --hello`,
+			` ${tagPrefix} --face=cursive if the word starts with --bold (the double dash) it's gonna be filtered out --hello`,
 			` ${tagPrefix} --face=cursive Assyst --bold`,
 			` ${tagPrefix} --face=medieval some medieval looking text`,
 			` ${tagPrefix} --face=wingdings use the faces argument to see all of them`,
@@ -613,10 +613,24 @@ if (flag("help") || (args.length === 1 && args[0] === "")) {
 		].join("\n")+"```");
 }
 const face = getarg("face");
-
-if (flag("faces"))
-	return OUT(`## Known faces:\n` + Object.keys(faces).filter(key => !Object.keys(new_faces).includes(key)).map(face => `- \`${face}\` (normal: ${faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") + ((Object.keys(new_faces).length > 0) ? `\n## \`ctx.customtext.overrides\` faces:\n` + Object.keys(new_faces).map(face => `- \`${face}\` (normal: ${new_faces[face]["normal"] ? EMOJIS.y : EMOJIS.x}, bold: ${new_faces[face]["bold"] ? EMOJIS.y : EMOJIS.x})`).join("\n") : ""))
-
+function list(faces) {
+	return Object.keys(faces)
+	.map(face => 
+		`- \`${face}\` = ${convert(text || face, face)}` + 
+		(faces[face]["bold"] ? `\n- \`${face}\` --bold = ${convert(text || face, face, true)}` : "")
+	)
+	.join("\n")
+}
+if (flag("faces")) {
+	const faces_with_overrides = {}
+	for (const [name, value] of Object.entries(faces)) {
+		faces_with_overrides[name] = value
+	}
+	if (ctx.customtext.new_faces) for (const [name, value] of Object.entries(new_faces)) {
+		faces_with_overrides[name] = value
+	}
+	return OUT(`## Available faces:\n${list(faces_with_overrides)}`)
+}
 let mainTag = ["customtext", "ct"].includes(tagName)
 if (!text) return OUT(`Please input some text${mainTag ? "to transform with a face" : ""}.\n`+
 	`Example: \`${tagPrefix} ${mainTag ? `${flag("bold") ? "--bold " : ""}--face=${face?.value ?? "cursive"}` : ""} placeholder text\``);
