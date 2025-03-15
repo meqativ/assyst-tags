@@ -104,6 +104,8 @@ return OUT(`\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […
     }
     if (args[0].startsWith("https://rule34.xxx/index.php?page=post&s=view&id=")) 
         onepost = fromQueryParams(args[0].split("https://rule34.xxx/index.php?")[1]).id
+    if (/^\d+$/.test(args[0]))
+				onepost = parseInt(str)
 
     let post;
     const tags = args.filter(arg => !arg.startsWith("--"));
