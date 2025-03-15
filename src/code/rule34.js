@@ -143,7 +143,7 @@ return OUT(`\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […
             if (regex.test(tagI)) {
                 if (!taggers.includes(`**${tagI}**`) || !taggers.includes(tagI)) {
                     if (!taggers.includes(tagI)) taggers.push(`**${tagI}**`)
-                    // I DONT KNOW WHAT'S GOING ON HERE I UNDERSTOOD IT A WEEK AGO
+                    // rewrite this or remove completely
                     let temp;
                     if ((temp = taggers.indexOf(tagI), temp !== -1)) taggers[temp] = `**${tagI}**`;
                 } else continue;
