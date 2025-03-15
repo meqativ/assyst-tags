@@ -3,7 +3,7 @@ const OUT = (thing) => { console.log(thing); return thing }
 if (globalThis['discord']) { // notsobot
 	message = discord.message
 	args = discord.variables.__args
-} 
+}
 let forceNoTags = false;
 let maxTagAmount = 15;
 let temp;
