@@ -103,8 +103,8 @@ return OUT(`\`\`\`ansi\n[33mUsage:[39m ${prefix}${commandName} ${tagName} […
         if (onepost < 0) return OUT(err("--index=num value must be a positive number"));
     }
     if (args[0].startsWith("https://rule34.xxx/index.php?page=post&s=view&id=")) 
-        onepost = args[0].split("page=post&s=view&id=")[1]
-    
+        onepost = fromQueryParams(args[0].split("https://rule34.xxx/index.php?")[1]).id
+
     let post;
     const tags = args.filter(arg => !arg.startsWith("--"));
     try {
