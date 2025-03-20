@@ -102,13 +102,13 @@ const err = (text) => `💥 \`\`${text}\`\``;
 		if (Number.isNaN(onepost)) return OUT(err("--id=num value must be a number"));
 		if (onepost < 0) return OUT(err("--index=num value must be a positive number"));
 	}
+	const tags = args.filter(arg => !arg.startsWith("--"));
 	if (args[0].startsWith("https://rule34.xxx/index.php?page=post&s=view&id="))
 		onepost = fromQueryParams(args[0].split("https://rule34.xxx/index.php?")[1]).id
-	if (/^\d+$/.test(args[0]))
-		onepost = parseInt(str)
+	if (/^\d+$/.test(tags))
+		onepost = parseInt(tags)
 
 	let post;
-	const tags = args.filter(arg => !arg.startsWith("--"));
 	try {
 		post = (await r34list(tags, { index, onepost }))[0];
 	} catch (error) {
