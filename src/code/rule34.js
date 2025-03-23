@@ -154,7 +154,7 @@ const err = (text) => `💥 \`\`${text}\`\``;
 		// push tags
 		output += `${flag("no-tags") && post.tags.length > 0
 			? ""
-			: `> ${taggers.slice(0, maxTagAmount - 1).join(", ")}${taggers.length > maxTagAmount
+			: `> ${taggers.slice(0, maxTagAmount - 1).join(", ").replaceAll("_","\\_")}${taggers.length > maxTagAmount
 				? ` & ${taggers.length - maxTagAmount} more…`
 				: ""
 			}`
